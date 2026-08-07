@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0a0a0a;
-  --ink-soft: #262825;
-  --paper: #f2f4ea;
-  --paper-deep: #e8ebdf;
-  --white: #fbfcf8;
-  --green: #4ade80;
-  --green-bright: #78f59e;
-  --green-pale: #dfffe9;
-  --line: rgba(10, 10, 10, 0.11);
-  --muted: #62675f;
+  --ink: #050b16;
+  --ink-soft: #0a1224;
+  --paper: #f4f6fa;
+  --paper-deep: #e9eef6;
+  --white: #ffffff;
+  --green: #0066ff;
+  --green-bright: #00b2ff;
+  --green-pale: #dcecff;
+  --line: rgba(10, 18, 36, 0.12);
+  --muted: #526078;
   --radius: 28px;
   --shell: 1180px;
 }
@@ -26,7 +26,7 @@ html {
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-sora), Arial, Helvetica, sans-serif;
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
@@ -85,9 +85,9 @@ canvas {
   align-items: center;
   display: inline-flex;
   font-size: 1.08rem;
-  font-weight: 760;
-  gap: 10px;
-  letter-spacing: -0.04em;
+  font-weight: 520;
+  gap: 12px;
+  letter-spacing: 0.12em;
   width: fit-content;
 }
 
@@ -152,7 +152,7 @@ canvas {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 18px;
-  box-shadow: 0 18px 50px rgba(10, 10, 10, 0.13);
+  box-shadow: 0 18px 50px rgba(5, 11, 22, 0.13);
   display: grid;
   gap: 4px;
   padding: 12px;
@@ -283,7 +283,7 @@ summary:focus-visible {
 .status-dot {
   background: var(--green);
   border-radius: 50%;
-  box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.17);
+  box-shadow: 0 0 0 5px rgba(0, 102, 255, 0.17);
   height: 8px;
   width: 8px;
 }
@@ -308,7 +308,7 @@ summary:focus-visible {
 }
 
 .hero h1 em {
-  color: #229f50;
+  color: #0066ff;
   display: block;
   font-style: normal;
 }
@@ -371,11 +371,11 @@ summary:focus-visible {
 
 .hero-visual {
   background:
-    radial-gradient(circle at 50% 40%, rgba(74, 222, 128, 0.42), transparent 43%),
+    radial-gradient(circle at 50% 40%, rgba(0, 178, 255, 0.4), transparent 43%),
     var(--ink);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 34px;
-  box-shadow: 0 32px 80px rgba(10, 10, 10, 0.2);
+  box-shadow: 0 32px 80px rgba(5, 11, 22, 0.22);
   height: min(670px, 74vh);
   min-height: 560px;
   overflow: hidden;
@@ -402,12 +402,12 @@ summary:focus-visible {
 }
 
 .vekko-scene-loading {
-  background: radial-gradient(circle at center, rgba(74, 222, 128, 0.2), transparent 58%);
+  background: radial-gradient(circle at center, rgba(0, 178, 255, 0.2), transparent 58%);
 }
 
 .phone-card {
   backdrop-filter: blur(16px);
-  background: rgba(251, 252, 248, 0.91);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 27px;
   bottom: 24px;
@@ -453,7 +453,7 @@ summary:focus-visible {
 }
 
 .vehicle-chip {
-  background: #ecefe8;
+  background: #e9eef6;
   border-radius: 12px;
   display: grid;
   gap: 3px;
@@ -482,7 +482,7 @@ summary:focus-visible {
 
 .phone-plan span,
 .phone-plan small {
-  color: #b4b9b1;
+  color: #afbdd2;
 }
 
 .phone-plan strong {
@@ -492,7 +492,7 @@ summary:focus-visible {
 }
 
 .phone-progress {
-  background: #343934;
+  background: #17243b;
   border-radius: 999px;
   height: 5px;
   margin-top: 11px;
@@ -639,7 +639,7 @@ summary:focus-visible {
 }
 
 .step-card > span {
-  color: #279c51;
+  color: #0066ff;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.75rem;
   font-weight: 650;
@@ -711,7 +711,7 @@ summary:focus-visible {
 }
 
 .benefit-dark p {
-  color: #adb2aa !important;
+  color: #afbdd2 !important;
 }
 
 .benefit-green {
@@ -719,11 +719,11 @@ summary:focus-visible {
 }
 
 .benefit-green p {
-  color: #183c24 !important;
+  color: #e5f6ff !important;
 }
 
 .benefit-network {
-  background-image: radial-gradient(rgba(10, 10, 10, 0.14) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(rgba(5, 11, 22, 0.14) 1.2px, transparent 1.2px);
   background-size: 18px 18px;
 }
 
@@ -846,7 +846,7 @@ summary:focus-visible {
 
 .plan-featured .plan-price span,
 .plan-featured > p {
-  color: #abb0aa;
+  color: #afbdd2;
 }
 
 .plan-card > p {
@@ -898,7 +898,7 @@ summary:focus-visible {
 }
 
 .plan-featured .plan-eligibility span {
-  color: #9da39b;
+  color: #9eb0c9;
 }
 
 .plan-eligibility strong {
@@ -951,13 +951,13 @@ summary:focus-visible {
 }
 
 .network-grid > div > p {
-  color: #afb4ad;
+  color: #afbdd2;
   margin: 28px 0 34px;
   max-width: 560px;
 }
 
 .map-card {
-  background-color: #171a17;
+  background-color: #0a1224;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
@@ -970,7 +970,7 @@ summary:focus-visible {
 }
 
 .map-card::before {
-  background: radial-gradient(circle, rgba(74, 222, 128, 0.3), transparent 64%);
+  background: radial-gradient(circle, rgba(0, 178, 255, 0.32), transparent 64%);
   content: "";
   height: 420px;
   left: 50%;
@@ -1021,10 +1021,10 @@ summary:focus-visible {
 
 .map-pin i {
   background: var(--green);
-  border: 8px solid rgba(74, 222, 128, 0.18);
+  border: 8px solid rgba(0, 178, 255, 0.18);
   background-clip: padding-box;
   border-radius: 50%;
-  box-shadow: 0 0 0 12px rgba(74, 222, 128, 0.08);
+  box-shadow: 0 0 0 12px rgba(0, 178, 255, 0.08);
   height: 34px;
   width: 34px;
 }
@@ -1044,7 +1044,7 @@ summary:focus-visible {
 }
 
 .map-caption span {
-  color: #9ca29b;
+  color: #9eb0c9;
   font-size: 0.65rem;
 }
 
@@ -1083,7 +1083,7 @@ summary:focus-visible {
 }
 
 .partner-mini-steps b {
-  color: #279c51;
+  color: #0066ff;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.65rem;
   margin-right: 20px;
@@ -1182,8 +1182,8 @@ summary:focus-visible {
   background: var(--ink);
   border-radius: 50%;
   box-shadow:
-    0 0 0 18px rgba(74, 222, 128, 0.23),
-    0 0 0 46px rgba(74, 222, 128, 0.11);
+    0 0 0 18px rgba(0, 178, 255, 0.23),
+    0 0 0 46px rgba(0, 102, 255, 0.11);
   color: var(--white);
   display: flex;
   font-size: 2rem;
@@ -1224,7 +1224,7 @@ summary:focus-visible {
 }
 
 .footer-grid > div:first-child p {
-  color: #9fa49e;
+  color: #9eb0c9;
   font-size: 0.85rem;
   line-height: 1.6;
   margin: 20px 0 0;
@@ -1244,7 +1244,7 @@ summary:focus-visible {
 
 .footer-grid a,
 .footer-grid span {
-  color: #9fa49e;
+  color: #9eb0c9;
   font-size: 0.75rem;
   line-height: 1.45;
 }
@@ -1287,7 +1287,7 @@ summary:focus-visible {
 }
 
 .partner-hero h1 em {
-  color: #249d50;
+  color: #0066ff;
   display: block;
   font-style: normal;
 }
@@ -1323,7 +1323,7 @@ summary:focus-visible {
 }
 
 .partner-info-card span {
-  color: #249d50;
+  color: #0066ff;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.7rem;
 }
@@ -1349,7 +1349,7 @@ summary:focus-visible {
 }
 
 .partner-process .section-heading > p {
-  color: #a7aca5;
+  color: #afbdd2;
 }
 
 .partner-process .step-card {
@@ -1361,7 +1361,7 @@ summary:focus-visible {
 }
 
 .partner-process .step-card p {
-  color: #a7aca5;
+  color: #afbdd2;
 }
 
 .partner-signup-grid,
@@ -1397,7 +1397,7 @@ summary:focus-visible {
   align-items: center;
   background: var(--green-pale);
   border-radius: 50%;
-  color: #207a40;
+  color: #0066ff;
   content: "✓";
   display: inline-flex;
   flex: 0 0 auto;

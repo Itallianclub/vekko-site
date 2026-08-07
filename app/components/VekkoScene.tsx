@@ -32,7 +32,7 @@ export function VekkoScene() {
     const bodyMaterial = new THREE.MeshPhysicalMaterial({
       clearcoat: 1,
       clearcoatRoughness: 0.12,
-      color: 0x111312,
+      color: 0x0a1224,
       metalness: 0.82,
       roughness: 0.22,
     });
@@ -43,7 +43,7 @@ export function VekkoScene() {
 
     const canopyGeometry = new THREE.SphereGeometry(0.72, 40, 24);
     const canopyMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0xdfffe9,
+      color: 0xe5f6ff,
       metalness: 0.1,
       opacity: 0.82,
       roughness: 0.05,
@@ -57,7 +57,7 @@ export function VekkoScene() {
 
     const wheelGeometry = new THREE.TorusGeometry(0.3, 0.115, 18, 42);
     const wheelMaterial = new THREE.MeshStandardMaterial({
-      color: 0x050605,
+      color: 0x050b16,
       metalness: 0.65,
       roughness: 0.32,
     });
@@ -68,7 +68,7 @@ export function VekkoScene() {
     });
 
     const haloMaterial = new THREE.MeshBasicMaterial({
-      color: 0x4ade80,
+      color: 0x0066ff,
       opacity: 0.72,
       transparent: true,
     });
@@ -95,7 +95,7 @@ export function VekkoScene() {
       new THREE.BufferAttribute(pointPositions, 3),
     );
     const pointMaterial = new THREE.PointsMaterial({
-      color: 0xb8ffcf,
+      color: 0x9fe4ff,
       opacity: 0.68,
       size: 0.035,
       transparent: true,
@@ -107,9 +107,9 @@ export function VekkoScene() {
     const keyLight = new THREE.DirectionalLight(0xffffff, 3.8);
     keyLight.position.set(3, 4, 5);
     scene.add(keyLight);
-    const greenLight = new THREE.PointLight(0x4ade80, 22, 10);
-    greenLight.position.set(-2.5, 1.2, 2.5);
-    scene.add(greenLight);
+    const cyanLight = new THREE.PointLight(0x00b2ff, 22, 10);
+    cyanLight.position.set(-2.5, 1.2, 2.5);
+    scene.add(cyanLight);
 
     const resize = () => {
       const width = mount.clientWidth;
