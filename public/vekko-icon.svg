@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">VEKKO</title>
+  <rect width="512" height="512" rx="112" fill="#0a0a0a"/>
+  <path d="M112 142h70l74 194 74-194h70L289 386h-66L112 142Z" fill="#fafafa"/>
+</svg>
