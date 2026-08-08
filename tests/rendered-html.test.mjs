@@ -50,7 +50,7 @@ test("renders partner and legal routes", async () => {
   assert.match(await terms.text(), /Termos de Uso/);
 });
 
-test("removes the temporary starter preview", async () => {
+test("keeps the institutional experience free of temporary and 3D assets", async () => {
   const [page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
@@ -60,8 +60,9 @@ test("removes the temporary starter preview", async () => {
   assert.match(page, /HomeExperience/);
   assert.match(layout, /VEKKO/);
   assert.match(packageJson, /"gsap": "3\.15\.0"/);
-  assert.match(packageJson, /"three": "0\.185\.1"/);
+  assert.doesNotMatch(packageJson, /"three":/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
+  await assert.rejects(access(new URL("../app/components/VekkoScene.tsx", import.meta.url)));
   await access(new URL("../public/vekko-icon.svg", import.meta.url));
 });

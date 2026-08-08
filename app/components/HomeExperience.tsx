@@ -3,17 +3,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
-
-const VekkoScene = dynamic(
-  () => import("./VekkoScene").then((module) => module.VekkoScene),
-  {
-    loading: () => <div className="vekko-scene vekko-scene-loading" aria-hidden="true" />,
-    ssr: false,
-  },
-);
 
 const steps = [
   {
@@ -199,51 +191,118 @@ export function HomeExperience() {
       <SiteHeader />
       <main>
         <section className="hero grid-surface" id="hero">
-          <div className="site-shell hero-grid">
-            <div className="hero-copy">
-              <div className="eyebrow-pill" data-hero-reveal>
-                <span className="status-dot" />
-                Piloto inicial · Uberlândia/MG
+          <div className="site-shell hero-shell">
+            <div className="hero-grid">
+              <div className="hero-copy">
+                <div className="eyebrow-pill" data-hero-reveal>
+                  <span className="status-dot" />
+                  Piloto inicial · Uberlândia/MG
+                </div>
+                <h1 data-hero-reveal>
+                  Cuidar do seu carro ficou <em>mais simples.</em>
+                </h1>
+                <p className="hero-lead" data-hero-reveal>
+                  Assine um plano por veículo, encontre parceiros credenciados e
+                  utilize seus benefícios diretamente pelo aplicativo VEKKO.
+                </p>
+                <div className="hero-actions" data-hero-reveal>
+                  <a className="button button-green" href="#planos">
+                    Conhecer planos <span aria-hidden="true">↓</span>
+                  </a>
+                  <a className="text-link" href="/seja-parceiro">
+                    Quero ser parceiro <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
               </div>
-              <h1 data-hero-reveal>
-                Cuidar do seu carro ficou <em>mais simples.</em>
-              </h1>
-              <p className="hero-lead" data-hero-reveal>
-                Assine um plano por veículo, encontre parceiros credenciados e
-                utilize seus benefícios diretamente pelo aplicativo VEKKO.
-              </p>
-              <div className="hero-actions" data-hero-reveal>
-                <a className="button button-green" href="#planos">
-                  Conhecer planos <span aria-hidden="true">↓</span>
-                </a>
-                <a className="text-link" href="/seja-parceiro">
-                  Quero ser parceiro <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-              <div className="hero-proof" data-hero-reveal>
-                <span>Assinatura por veículo</span>
-                <span>Rede credenciada</span>
-                <span>QR Code seguro</span>
-              </div>
+
+              <aside className="hero-definition" data-hero-reveal>
+                <span className="hero-definition-label">VEKKO em uma frase</span>
+                <p>
+                  Uma plataforma de assinatura e benefícios automotivos por
+                  veículo.
+                </p>
+                <div className="hero-definition-list">
+                  <span><b>01</b> Uma assinatura para cada veículo</span>
+                  <span><b>02</b> Uso em parceiros credenciados</span>
+                  <span><b>03</b> Validação segura pelo aplicativo</span>
+                </div>
+              </aside>
             </div>
 
-            <div className="hero-visual" data-hero-reveal>
-              <VekkoScene />
-              <div className="phone-card" aria-label="Prévia conceitual do aplicativo VEKKO">
+            <div
+              className="product-showcase"
+              data-hero-reveal
+              aria-label="Prévia conceitual da plataforma VEKKO"
+            >
+              <div className="product-window">
+                <div className="product-toolbar">
+                  <div className="product-wordmark">
+                    <Image src="/vekko-icon.svg" alt="" width="30" height="30" priority />
+                    <strong>VEKKO</strong>
+                  </div>
+                  <span className="product-toolbar-location">Uberlândia/MG</span>
+                  <span className="product-avatar">IS</span>
+                </div>
+
+                <div className="product-dashboard">
+                  <nav className="product-nav" aria-label="Prévia da navegação do aplicativo">
+                    <strong>Meu veículo</strong>
+                    <span>Plano e benefícios</span>
+                    <span>Parceiros próximos</span>
+                    <span>Histórico de uso</span>
+                  </nav>
+
+                  <div className="product-content">
+                    <div className="product-content-heading">
+                      <div>
+                        <span>Visão do veículo</span>
+                        <h2>Olá, Isaac.</h2>
+                      </div>
+                      <span className="product-status">Plano ativo</span>
+                    </div>
+
+                    <div className="product-metrics">
+                      <article className="product-metric product-metric-dark">
+                        <span>Plano atual</span>
+                        <strong>Essential</strong>
+                        <small>ABC1D23 · Sedan</small>
+                      </article>
+                      <article className="product-metric">
+                        <span>Benefícios disponíveis</span>
+                        <strong>3 de 4</strong>
+                        <small>neste ciclo</small>
+                      </article>
+                    </div>
+
+                    <article className="product-partner-card">
+                      <div>
+                        <span>Parceiro credenciado próximo</span>
+                        <strong>Auto Clean · Centro</strong>
+                      </div>
+                      <div className="product-partner-distance">
+                        <strong>1,2 km</strong>
+                        <span>Ver rota →</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <div className="product-phone">
                 <div className="phone-topline">
                   <span>9:41</span>
                   <span>● ● ●</span>
                 </div>
                 <div className="phone-brand">VEKKO</div>
-                <div className="phone-greeting">Olá, Isaac.</div>
+                <div className="phone-greeting">Seu plano</div>
                 <div className="vehicle-chip">
-                  <span>Seu veículo</span>
+                  <span>Veículo</span>
                   <strong>ABC1D23 · Sedan</strong>
                 </div>
                 <div className="phone-plan">
                   <span>Plano Essential</span>
                   <strong>3 de 4</strong>
-                  <small>lavagens disponíveis</small>
+                  <small>benefícios disponíveis</small>
                   <div className="phone-progress"><i /></div>
                 </div>
                 <div className="phone-qr">
@@ -251,8 +310,11 @@ export function HomeExperience() {
                   <span>Autorizar atendimento</span>
                 </div>
               </div>
-              <div className="floating-note note-top">Plano ativo</div>
-              <div className="floating-note note-bottom">Parceiro próximo · 1,2 km</div>
+
+              <div className="product-assurance">
+                <span>Seguro em cada uso</span>
+                <strong>Autorização pelo app + QR Code</strong>
+              </div>
             </div>
           </div>
         </section>
