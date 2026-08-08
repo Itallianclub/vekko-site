@@ -47,3 +47,15 @@ npm test
 
 O projeto não utiliza banco de dados, armazenamento de arquivos ou serviços de
 infraestrutura externos para funcionar.
+
+## Deploy na Vercel
+
+As configurações necessárias estão versionadas em `vercel.json`:
+
+- Install Command: `npm install`
+- Build Command: `npm run build`
+- Output Directory: `.output`
+- Node.js: `22.x`
+
+O Nitro gera a função SSR e o roteamento de todas as páginas. Não é necessário
+adicionar rewrites manuais para as rotas institucionais.

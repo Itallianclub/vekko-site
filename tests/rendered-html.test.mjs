@@ -1,17 +1,53 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
 import { access, readFile } from "node:fs/promises";
-import test from "node:test";
+import { fileURLToPath } from "node:url";
+import test, { after, before } from "node:test";
+
+const port = 43000 + (process.pid % 1000);
+const origin = `http://127.0.0.1:${port}`;
+let productionServer;
+
+before(async () => {
+  const serverEntry = fileURLToPath(
+    new URL("../.output/server/index.mjs", import.meta.url),
+  );
+
+  productionServer = spawn(process.execPath, [serverEntry], {
+    env: {
+      ...process.env,
+      NITRO_HOST: "127.0.0.1",
+      NITRO_PORT: String(port),
+    },
+    stdio: "ignore",
+  });
+
+  for (let attempt = 0; attempt < 60; attempt += 1) {
+    if (productionServer.exitCode !== null) {
+      throw new Error("A saída de produção encerrou antes de iniciar.");
+    }
+
+    try {
+      const response = await fetch(origin);
+      if (response.ok) return;
+    } catch {
+      // O servidor ainda está inicializando.
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  throw new Error("A saída de produção não respondeu dentro do tempo limite.");
+});
+
+after(() => {
+  productionServer?.kill();
+});
 
 async function render(pathname = "/") {
-  const serverUrl = new URL("../dist/server/index.js", import.meta.url);
-  serverUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
-  const { default: handler } = await import(serverUrl.href);
-
-  return handler(
-    new Request(`http://localhost${pathname}`, {
-      headers: { accept: "text/html" },
-    }),
-  );
+  return fetch(`${origin}${pathname}`, {
+    headers: { accept: "text/html" },
+  });
 }
 
 test("server-renders the VEKKO institutional home", async () => {
@@ -50,10 +86,12 @@ test("renders partner and legal routes", async () => {
 });
 
 test("keeps only the dependencies and assets used by the institutional site", async () => {
-  const [page, layout, packageJson] = await Promise.all([
+  const [page, layout, packageJson, viteConfig, vercelConfig] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../vite.config.ts", import.meta.url), "utf8"),
+    readFile(new URL("../vercel.json", import.meta.url), "utf8"),
   ]);
 
   assert.match(page, /HomeExperience/);
@@ -65,6 +103,10 @@ test("keeps only the dependencies and assets used by the institutional site", as
   assert.doesNotMatch(packageJson, /"three":/);
   assert.doesNotMatch(packageJson, /@cloudflare\/vite-plugin|drizzle|wrangler/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.match(packageJson, /"node": "22\.x"/);
+  assert.match(packageJson, /"build": "vite build"/);
+  assert.match(viteConfig, /nitro\/vite/);
+  assert.equal(JSON.parse(vercelConfig).outputDirectory, ".output");
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
   await assert.rejects(access(new URL("../app/components/VekkoScene.tsx", import.meta.url)));
   await assert.rejects(access(new URL("../app/chatgpt-auth.ts", import.meta.url)));
@@ -72,4 +114,5 @@ test("keeps only the dependencies and assets used by the institutional site", as
   await assert.rejects(access(new URL("../db/index.ts", import.meta.url)));
   await access(new URL("../public/vekko-logo-navbar.png", import.meta.url));
   await access(new URL("../public/vekko-symbol.png", import.meta.url));
+  await access(new URL("../.output/server/index.mjs", import.meta.url));
 });
