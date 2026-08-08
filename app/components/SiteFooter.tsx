@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="site-shell footer-grid">
         <div>
           <Link className="brand brand-footer" href="/" aria-label="VEKKO — página inicial">
-            <Image src="/vekko-icon.svg" alt="" width="42" height="42" />
+            <Image src="/vekko-symbol.png" alt="" width="50" height="39" />
             <span>VEKKO</span>
           </Link>
           <p>

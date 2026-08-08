@@ -36,8 +36,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Assinatura e benefícios automotivos por veículo, conectados a uma rede de estabelecimentos parceiros.",
     icons: {
-      icon: "/vekko-icon.svg",
-      shortcut: "/vekko-icon.svg",
+      icon: "/vekko-symbol.png",
+      shortcut: "/vekko-symbol.png",
     },
     openGraph: {
       description:

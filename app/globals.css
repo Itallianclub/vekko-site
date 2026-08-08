@@ -92,7 +92,12 @@ canvas {
 }
 
 .brand img {
-  border-radius: 11px;
+  display: block;
+}
+
+.brand-header img {
+  height: auto;
+  width: 154px;
 }
 
 .desktop-nav {
@@ -209,8 +214,8 @@ summary:focus-visible {
 }
 
 .portal-button {
-  background: rgba(244, 246, 250, 0.96);
-  border: 2px solid rgba(255, 255, 255, 0.82);
+  background: var(--white);
+  border: 2px solid var(--white);
   box-shadow: 0 12px 28px rgba(5, 11, 22, 0.13);
   color: var(--ink);
   gap: 12px;
@@ -225,7 +230,7 @@ summary:focus-visible {
   background: var(--green);
   border-radius: 50%;
   content: "";
-  left: -92%;
+  left: -110%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -791,9 +796,9 @@ summary:focus-visible {
 }
 
 .phone-brand {
-  font-size: 0.66rem;
-  font-weight: 790;
-  letter-spacing: 0.08em;
+  align-items: center;
+  display: flex;
+  min-height: 20px;
 }
 
 .phone-greeting {
@@ -2041,9 +2046,14 @@ summary:focus-visible {
     display: block;
   }
 
-  .brand img {
-    height: 34px;
-    width: 34px;
+  .brand-header img {
+    height: auto;
+    width: 136px;
+  }
+
+  .brand-footer img {
+    height: auto;
+    width: 44px;
   }
 
   .hero-shell {

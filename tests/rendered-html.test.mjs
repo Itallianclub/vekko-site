@@ -34,6 +34,8 @@ test("server-renders the VEKKO institutional home", async () => {
   assert.match(html, /benefits-deck/);
   assert.match(html, /portal-button/);
   assert.match(html, /bi-arrow-up/);
+  assert.match(html, /vekko-logo-navbar\.png/);
+  assert.match(html, /vekko-symbol\.png/);
   assert.match(html, /Planos VEKKO/);
   assert.match(html, /79,90/);
   assert.match(html, /379,90/);
@@ -66,11 +68,13 @@ test("keeps the institutional experience free of temporary and 3D assets", async
   assert.match(page, /HomeExperience/);
   assert.match(layout, /VEKKO/);
   assert.match(layout, /bootstrap-icons\/font\/bootstrap-icons\.css/);
+  assert.match(layout, /vekko-symbol\.png/);
   assert.match(packageJson, /"bootstrap-icons":/);
   assert.match(packageJson, /"gsap": "3\.15\.0"/);
   assert.doesNotMatch(packageJson, /"three":/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
   await assert.rejects(access(new URL("../app/components/VekkoScene.tsx", import.meta.url)));
-  await access(new URL("../public/vekko-icon.svg", import.meta.url));
+  await access(new URL("../public/vekko-logo-navbar.png", import.meta.url));
+  await access(new URL("../public/vekko-symbol.png", import.meta.url));
 });

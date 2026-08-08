@@ -12,9 +12,14 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-shell header-shell">
-        <Link className="brand" href="/" aria-label="VEKKO — página inicial">
-          <Image src="/vekko-icon.svg" alt="" width="38" height="38" priority />
-          <span>VEKKO</span>
+        <Link className="brand brand-header" href="/" aria-label="VEKKO — página inicial">
+          <Image
+            src="/vekko-logo-navbar.png"
+            alt=""
+            width="774"
+            height="183"
+            priority
+          />
         </Link>
 
         <nav className="desktop-nav" aria-label="Navegação principal">

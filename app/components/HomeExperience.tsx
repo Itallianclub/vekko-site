@@ -302,7 +302,7 @@ export function HomeExperience() {
               <div className="product-window">
                 <div className="product-toolbar">
                   <div className="product-wordmark">
-                    <Image src="/vekko-icon.svg" alt="" width="30" height="30" priority />
+                    <Image src="/vekko-symbol.png" alt="" width="32" height="25" priority />
                     <strong>VEKKO</strong>
                   </div>
                   <span className="product-toolbar-location">Uberlândia/MG</span>
@@ -364,7 +364,9 @@ export function HomeExperience() {
                     <i className="bi bi-battery-full" />
                   </span>
                 </div>
-                <div className="phone-brand">VEKKO</div>
+                <div className="phone-brand">
+                  <Image src="/vekko-symbol.png" alt="" width="26" height="20" />
+                </div>
                 <div className="phone-greeting">Seu plano</div>
                 <div className="vehicle-chip">
                   <span>Veículo</span>
