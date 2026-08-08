@@ -3,23 +3,14 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
-  const { default: worker } = await import(workerUrl.href);
+  const serverUrl = new URL("../dist/server/index.js", import.meta.url);
+  serverUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
+  const { default: handler } = await import(serverUrl.href);
 
-  return worker.fetch(
+  return handler(
     new Request(`http://localhost${pathname}`, {
       headers: { accept: "text/html" },
     }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
   );
 }
 
@@ -58,7 +49,7 @@ test("renders partner and legal routes", async () => {
   assert.match(await terms.text(), /Termos de Uso/);
 });
 
-test("keeps the institutional experience free of temporary and 3D assets", async () => {
+test("keeps only the dependencies and assets used by the institutional site", async () => {
   const [page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
@@ -72,9 +63,13 @@ test("keeps the institutional experience free of temporary and 3D assets", async
   assert.match(packageJson, /"bootstrap-icons":/);
   assert.match(packageJson, /"gsap": "3\.15\.0"/);
   assert.doesNotMatch(packageJson, /"three":/);
+  assert.doesNotMatch(packageJson, /@cloudflare\/vite-plugin|drizzle|wrangler/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
   await assert.rejects(access(new URL("../app/components/VekkoScene.tsx", import.meta.url)));
+  await assert.rejects(access(new URL("../app/chatgpt-auth.ts", import.meta.url)));
+  await assert.rejects(access(new URL("../worker/index.ts", import.meta.url)));
+  await assert.rejects(access(new URL("../db/index.ts", import.meta.url)));
   await access(new URL("../public/vekko-logo-navbar.png", import.meta.url));
   await access(new URL("../public/vekko-symbol.png", import.meta.url));
 });
