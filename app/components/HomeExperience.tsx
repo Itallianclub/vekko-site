@@ -487,11 +487,10 @@ export function HomeExperience() {
               </p>
             </div>
 
-            <div className="plans-grid">
+            <div className="plans-grid" data-reveal>
               {plans.map((plan) => (
                 <article
                   className={`plan-card${plan.accent ? " plan-featured" : ""}`}
-                  data-reveal
                   key={plan.name}
                 >
                   {plan.accent ? <span className="plan-tag">Mais versátil</span> : null}
@@ -503,9 +502,18 @@ export function HomeExperience() {
                   </div>
                   <p>{plan.description}</p>
                   <ul>
-                    <li>{plan.washes}</li>
-                    <li>Uso na rede credenciada</li>
-                    <li>Autorização pelo aplicativo</li>
+                    <li>
+                      <i className="bi bi-check-circle" aria-hidden="true" />
+                      <span>{plan.washes}</span>
+                    </li>
+                    <li>
+                      <i className="bi bi-check-circle" aria-hidden="true" />
+                      <span>Uso na rede credenciada</span>
+                    </li>
+                    <li>
+                      <i className="bi bi-check-circle" aria-hidden="true" />
+                      <span>Autorização pelo aplicativo</span>
+                    </li>
                   </ul>
                   <div className="plan-eligibility">
                     <span>Veículos elegíveis</span>

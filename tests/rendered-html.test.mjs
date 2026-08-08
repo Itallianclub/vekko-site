@@ -33,6 +33,8 @@ test("server-renders the VEKKO institutional home", async () => {
   assert.match(html, /data-magnetic-zone/);
   assert.match(html, /benefits-deck/);
   assert.match(html, /Planos VEKKO/);
+  assert.match(html, /79,90/);
+  assert.match(html, /379,90/);
   assert.match(html, /Uberlândia\/MG/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
