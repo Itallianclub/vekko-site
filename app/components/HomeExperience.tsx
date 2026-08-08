@@ -183,7 +183,64 @@ export function HomeExperience() {
       });
     }, root);
 
-    return () => context.revert();
+    const magneticCleanups = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-magnetic-zone]"),
+    ).map((zone) => {
+      const button = zone.querySelector<HTMLElement>("[data-magnetic-button]");
+      if (!button) return () => undefined;
+
+      const handlePointerMove = (event: PointerEvent) => {
+        if (event.pointerType !== "mouse") return;
+
+        const rect = zone.getBoundingClientRect();
+        const x = gsap.utils.mapRange(
+          rect.left,
+          rect.right,
+          -rect.width / 2,
+          rect.width / 2,
+          event.clientX,
+        );
+        const y = gsap.utils.mapRange(
+          rect.top,
+          rect.bottom,
+          -rect.height / 2,
+          rect.height / 2,
+          event.clientY,
+        );
+
+        gsap.to(button, {
+          duration: 0.4,
+          ease: "power2.out",
+          overwrite: true,
+          x: x * 0.6,
+          y: y * 0.6,
+        });
+      };
+
+      const resetButton = () => {
+        gsap.to(button, {
+          duration: 0.7,
+          ease: "elastic.out(1, 0.4)",
+          overwrite: true,
+          x: 0,
+          y: 0,
+        });
+      };
+
+      zone.addEventListener("pointermove", handlePointerMove);
+      zone.addEventListener("pointerleave", resetButton);
+
+      return () => {
+        zone.removeEventListener("pointermove", handlePointerMove);
+        zone.removeEventListener("pointerleave", resetButton);
+        gsap.killTweensOf(button);
+      };
+    });
+
+    return () => {
+      magneticCleanups.forEach((cleanup) => cleanup());
+      context.revert();
+    };
   }, []);
 
   return (
@@ -206,9 +263,16 @@ export function HomeExperience() {
                   utilize seus benefícios diretamente pelo aplicativo VEKKO.
                 </p>
                 <div className="hero-actions" data-hero-reveal>
-                  <a className="button button-green" href="#planos">
-                    Conhecer planos <span aria-hidden="true">↓</span>
-                  </a>
+                  <div className="magnetic-zone" data-magnetic-zone>
+                    <a
+                      className="button button-magnetic"
+                      data-magnetic-button
+                      href="#planos"
+                    >
+                      <span>Conhecer planos</span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  </div>
                   <a className="text-link" href="/seja-parceiro">
                     Quero ser parceiro <span aria-hidden="true">↗</span>
                   </a>
