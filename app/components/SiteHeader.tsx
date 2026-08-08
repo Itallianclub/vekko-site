@@ -25,8 +25,11 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link className="button button-dark header-cta" href="/seja-parceiro#portal">
-          Acessar portal <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
+        <Link className="button portal-button header-cta" href="/seja-parceiro#portal">
+          <span>Acessar portal</span>
+          <span className="portal-button-icon" aria-hidden="true">
+            <i className="bi bi-arrow-up" />
+          </span>
         </Link>
 
         <details className="mobile-menu">
