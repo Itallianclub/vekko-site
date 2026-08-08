@@ -970,10 +970,8 @@ summary:focus-visible {
   width: max-content;
 }
 
-.benefits-grid {
-  display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.benefits-feature {
+  margin-bottom: 24px;
 }
 
 .benefit-card {
@@ -987,6 +985,90 @@ summary:focus-visible {
   overflow: hidden;
   padding: 32px;
   position: relative;
+}
+
+.benefits-deck {
+  display: flex;
+  justify-content: center;
+  padding: 94px 0 72px;
+}
+
+.benefit-deck-card {
+  box-shadow: -20px 22px 38px rgba(5, 11, 22, 0.16);
+  flex: 0 0 min(390px, 36vw);
+  margin-right: -156px;
+  min-height: 450px;
+  padding: 36px;
+  transition:
+    box-shadow 500ms ease,
+    margin-right 500ms ease,
+    transform 500ms ease;
+  z-index: 1;
+}
+
+.benefit-deck-card::after {
+  background: var(--white);
+  border-radius: 50%;
+  content: "";
+  filter: blur(76px);
+  height: 210px;
+  left: 50%;
+  opacity: 0.18;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -54%);
+  transition: opacity 700ms ease;
+  width: 410px;
+}
+
+.benefit-deck-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.86),
+    rgba(0, 178, 255, 0.22)
+  );
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 2px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.benefit-deck-card .benefit-visual {
+  position: relative;
+  z-index: 2;
+}
+
+.benefit-deck-last {
+  margin-right: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .benefit-deck-card:hover {
+    box-shadow: -26px 32px 54px rgba(5, 11, 22, 0.23);
+    margin-right: -38px;
+    transform: rotate(-4deg) translateY(-46px);
+    z-index: 10;
+  }
+
+  .benefit-deck-card:hover::after {
+    opacity: 0.72;
+  }
+
+  .benefit-deck-last:hover {
+    margin-right: 0;
+  }
 }
 
 .benefit-wide {
@@ -1969,7 +2051,6 @@ summary:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .benefits-grid,
   .plans-grid,
   .partner-benefits-grid {
     grid-template-columns: 1fr;
@@ -1982,6 +2063,23 @@ summary:focus-visible {
   .benefit-card {
     min-height: 360px;
     padding: 26px;
+  }
+
+  .benefits-feature {
+    margin-bottom: 16px;
+  }
+
+  .benefits-deck {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+  }
+
+  .benefit-deck-card,
+  .benefit-deck-last {
+    flex-basis: auto;
+    margin-right: 0;
+    width: 100%;
   }
 
   .plans-grid {

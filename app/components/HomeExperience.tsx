@@ -440,11 +440,26 @@ export function HomeExperience() {
                 <h2>Tecnologia para simplificar o cuidado.</h2>
               </div>
             </div>
-            <div className="benefits-grid">
-              {benefits.map((benefit) => (
+            <div className="benefits-feature">
+              {benefits.slice(0, 1).map((benefit) => (
                 <article
                   className={`benefit-card ${benefit.className}`}
                   data-reveal
+                  key={benefit.title}
+                >
+                  <span className="benefit-visual">{benefit.visual}</span>
+                  <div>
+                    <span className="section-kicker">{benefit.eyebrow}</span>
+                    <h3>{benefit.title}</h3>
+                    <p>{benefit.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="benefits-deck" data-reveal>
+              {benefits.slice(1).map((benefit, index, deck) => (
+                <article
+                  className={`benefit-card benefit-deck-card ${benefit.className}${index === deck.length - 1 ? " benefit-deck-last" : ""}`}
                   key={benefit.title}
                 >
                   <span className="benefit-visual">{benefit.visual}</span>

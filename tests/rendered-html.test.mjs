@@ -31,6 +31,7 @@ test("server-renders the VEKKO institutional home", async () => {
   const html = await response.text();
   assert.match(html, /Cuidar do seu carro ficou/);
   assert.match(html, /data-magnetic-zone/);
+  assert.match(html, /benefits-deck/);
   assert.match(html, /Planos VEKKO/);
   assert.match(html, /Uberlândia\/MG/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
