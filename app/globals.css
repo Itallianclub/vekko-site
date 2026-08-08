@@ -190,6 +190,12 @@ canvas {
   transform: translateY(-2px);
 }
 
+.button > .bi {
+  flex: 0 0 auto;
+  font-size: 0.96em;
+  line-height: 1;
+}
+
 .button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
@@ -252,7 +258,8 @@ summary:focus-visible {
   transform: none;
 }
 
-.button-magnetic span {
+.button-magnetic span,
+.button-magnetic > .bi {
   pointer-events: none;
   position: relative;
   z-index: 1;
@@ -429,11 +436,12 @@ summary:focus-visible {
   gap: 9px;
 }
 
-.text-link:hover span {
+.text-link:hover .bi {
   transform: translate(2px, -2px);
 }
 
-.text-link span {
+.text-link .bi {
+  font-size: 0.9em;
   transition: transform 180ms ease;
 }
 
@@ -704,6 +712,17 @@ summary:focus-visible {
   margin-bottom: 18px;
 }
 
+.phone-system-icons {
+  align-items: center;
+  display: inline-flex;
+  gap: 4px;
+}
+
+.phone-system-icons .bi {
+  font-size: 0.58rem;
+  line-height: 1;
+}
+
 .phone-brand {
   font-size: 0.66rem;
   font-weight: 790;
@@ -790,6 +809,11 @@ summary:focus-visible {
   height: 28px;
   justify-content: center;
   width: 28px;
+}
+
+.phone-qr b .bi {
+  font-size: 0.85rem;
+  line-height: 1;
 }
 
 .product-assurance {
@@ -1285,12 +1309,19 @@ summary:focus-visible {
 }
 
 .map-pin i {
+  align-items: center;
   background: var(--green);
   border: 8px solid rgba(0, 178, 255, 0.18);
   background-clip: padding-box;
   border-radius: 50%;
   box-shadow: 0 0 0 12px rgba(0, 178, 255, 0.08);
+  box-sizing: content-box;
+  color: var(--white);
+  display: inline-flex;
+  font-size: 1rem;
   height: 34px;
+  justify-content: center;
+  line-height: 1;
   width: 34px;
 }
 
@@ -1658,18 +1689,18 @@ summary:focus-visible {
   border-bottom: 0;
 }
 
-.partner-checklist li::before {
+.partner-checklist li > .bi {
   align-items: center;
   background: var(--green-pale);
   border-radius: 50%;
   color: #0066ff;
-  content: "✓";
   display: inline-flex;
   flex: 0 0 auto;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   font-weight: 800;
   height: 28px;
   justify-content: center;
+  line-height: 1;
   width: 28px;
 }
 
@@ -1711,10 +1742,9 @@ summary:focus-visible {
   letter-spacing: 0.08em;
 }
 
-.portal-badge span {
+.portal-badge > .bi {
   font-size: clamp(3.2rem, 9vw, 7rem);
-  font-weight: 750;
-  letter-spacing: -0.08em;
+  line-height: 1;
 }
 
 .legal-hero {

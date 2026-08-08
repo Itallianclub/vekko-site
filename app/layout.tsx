@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Sora } from "next/font/google";
 import { headers } from "next/headers";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 
 const sora = Sora({

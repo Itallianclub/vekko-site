@@ -70,10 +70,11 @@ export default function PartnerPage() {
               </p>
               <div className="hero-actions">
                 <a className="button button-green" href="#cadastro">
-                  Quero ser parceiro <span aria-hidden="true">↓</span>
+                  Quero ser parceiro <i className="bi bi-arrow-down" aria-hidden="true" />
                 </a>
                 <a className="text-link" href="#portal">
-                  Já sou parceiro <span aria-hidden="true">↗</span>
+                  Já sou parceiro
+                  <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -141,16 +142,17 @@ export default function PartnerPage() {
                 className="button button-green"
                 href="mailto:parceiros@vekko.com.br?subject=Quero%20ser%20parceiro%20VEKKO"
               >
-                Solicitar cadastro <span aria-hidden="true">↗</span>
+                Solicitar cadastro
+                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
               </a>
             </div>
             <ul className="partner-checklist" aria-label="Informações para o cadastro">
-              <li>Dados do responsável e do estabelecimento</li>
-              <li>CNPJ e informações comerciais</li>
-              <li>Endereço e localização da unidade</li>
-              <li>Horários de atendimento</li>
-              <li>Serviços e tipos de veículo atendidos</li>
-              <li>Fotos e informações da estrutura</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />Dados do responsável e do estabelecimento</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />CNPJ e informações comerciais</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />Endereço e localização da unidade</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />Horários de atendimento</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />Serviços e tipos de veículo atendidos</li>
+              <li><i className="bi bi-check-lg" aria-hidden="true" />Fotos e informações da estrutura</li>
             </ul>
           </div>
         </section>
@@ -159,7 +161,7 @@ export default function PartnerPage() {
           <div className="site-shell portal-grid">
             <div className="portal-badge" aria-hidden="true">
               <strong>PORTAL DO PARCEIRO</strong>
-              <span>V.</span>
+              <i className="bi bi-shop-window" />
             </div>
             <div className="portal-copy">
               <span className="section-kicker">Já faz parte da rede?</span>
@@ -173,7 +175,8 @@ export default function PartnerPage() {
                 className="button button-dark"
                 href="mailto:parceiros@vekko.com.br?subject=Ajuda%20com%20o%20portal%20VEKKO"
               >
-                Solicitar ajuda de acesso <span aria-hidden="true">↗</span>
+                Solicitar ajuda de acesso
+                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
               </a>
             </div>
           </div>

@@ -60,6 +60,8 @@ test("keeps the institutional experience free of temporary and 3D assets", async
 
   assert.match(page, /HomeExperience/);
   assert.match(layout, /VEKKO/);
+  assert.match(layout, /bootstrap-icons\/font\/bootstrap-icons\.css/);
+  assert.match(packageJson, /"bootstrap-icons":/);
   assert.match(packageJson, /"gsap": "3\.15\.0"/);
   assert.doesNotMatch(packageJson, /"three":/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);

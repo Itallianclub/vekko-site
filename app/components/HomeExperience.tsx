@@ -270,11 +270,12 @@ export function HomeExperience() {
                       href="#planos"
                     >
                       <span>Conhecer planos</span>
-                      <span aria-hidden="true">↓</span>
+                      <i className="bi bi-arrow-down" aria-hidden="true" />
                     </a>
                   </div>
                   <a className="text-link" href="/seja-parceiro">
-                    Quero ser parceiro <span aria-hidden="true">↗</span>
+                    Quero ser parceiro
+                    <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
                   </a>
                 </div>
               </div>
@@ -345,7 +346,9 @@ export function HomeExperience() {
                       </div>
                       <div className="product-partner-distance">
                         <strong>1,2 km</strong>
-                        <span>Ver rota →</span>
+                        <span>
+                          Ver rota <i className="bi bi-arrow-right" aria-hidden="true" />
+                        </span>
                       </div>
                     </article>
                   </div>
@@ -355,7 +358,11 @@ export function HomeExperience() {
               <div className="product-phone">
                 <div className="phone-topline">
                   <span>9:41</span>
-                  <span>● ● ●</span>
+                  <span className="phone-system-icons" aria-hidden="true">
+                    <i className="bi bi-reception-4" />
+                    <i className="bi bi-wifi" />
+                    <i className="bi bi-battery-full" />
+                  </span>
                 </div>
                 <div className="phone-brand">VEKKO</div>
                 <div className="phone-greeting">Seu plano</div>
@@ -370,7 +377,7 @@ export function HomeExperience() {
                   <div className="phone-progress"><i /></div>
                 </div>
                 <div className="phone-qr">
-                  <b>QR</b>
+                  <b aria-hidden="true"><i className="bi bi-qr-code-scan" /></b>
                   <span>Autorizar atendimento</span>
                 </div>
               </div>
@@ -490,7 +497,7 @@ export function HomeExperience() {
                     <strong>{plan.eligibility}</strong>
                   </div>
                   <a className="button button-plan" href="#aplicativo">
-                    Quero esse plano <span aria-hidden="true">→</span>
+                    Quero esse plano <i className="bi bi-arrow-right" aria-hidden="true" />
                   </a>
                 </article>
               ))}
@@ -513,14 +520,18 @@ export function HomeExperience() {
                 a rede disponível, serviços e distância de cada parceiro.
               </p>
               <a className="button button-light" href="/seja-parceiro">
-                Quero fazer parte da rede <span aria-hidden="true">↗</span>
+                Quero fazer parte da rede
+                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
               </a>
             </div>
             <div className="map-card" data-reveal aria-label="Operação inicial em Uberlândia, Minas Gerais">
               <div className="map-roads road-one" />
               <div className="map-roads road-two" />
               <div className="map-roads road-three" />
-              <div className="map-pin"><i />Uberlândia</div>
+              <div className="map-pin">
+                <i className="bi bi-geo-alt-fill" aria-hidden="true" />
+                Uberlândia
+              </div>
               <div className="map-caption">
                 <span>Operação inicial</span>
                 <strong>Uberlândia · MG</strong>
@@ -546,7 +557,7 @@ export function HomeExperience() {
                 <span><b>03</b> Conclua o atendimento</span>
               </div>
               <a className="button button-green" href="/seja-parceiro">
-                Quero ser parceiro <span aria-hidden="true">→</span>
+                Quero ser parceiro <i className="bi bi-arrow-right" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -567,7 +578,7 @@ export function HomeExperience() {
                 <details key={item.question} open={index === 0}>
                   <summary>
                     {item.question}
-                    <span aria-hidden="true">+</span>
+                    <span aria-hidden="true"><i className="bi bi-plus-lg" /></span>
                   </summary>
                   <p>{item.answer}</p>
                 </details>
@@ -590,7 +601,8 @@ export function HomeExperience() {
                 className="button button-green"
                 href="mailto:contato@vekko.com.br?subject=Quero%20acompanhar%20o%20lançamento%20da%20VEKKO"
               >
-                Acompanhar lançamento <span aria-hidden="true">↗</span>
+                Acompanhar lançamento
+                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
               </a>
               <a className="text-link" href="/seja-parceiro">
                 Cadastrar estabelecimento
