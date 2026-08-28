@@ -56,13 +56,14 @@ test("server-renders the VEKKO institutional home", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Cuidar do seu carro ficou/);
-  assert.match(html, /data-magnetic-zone/);
+  assert.match(html, /Lave seu carro/);
+  assert.match(html, /sem pagar por cada lavagem/);
   assert.match(html, /benefits-deck/);
   assert.match(html, /portal-button/);
   assert.match(html, /bi-arrow-up/);
   assert.match(html, /vekko-logo-navbar\.png/);
   assert.match(html, /vekko-symbol\.png/);
+  assert.match(html, /hero-car\.webp/);
   assert.match(html, /Planos VEKKO/);
   assert.match(html, /79,90/);
   assert.match(html, /379,90/);

@@ -4,135 +4,121 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Link from "next/link";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
 const steps = [
-  {
-    number: "01",
-    title: "Cadastre seu veículo",
-    text: "A assinatura é individual: cada veículo tem seu próprio plano e seus próprios benefícios.",
-  },
-  {
-    number: "02",
-    title: "Escolha um plano",
-    text: "Compare as opções elegíveis para o tipo do seu veículo e escolha a melhor frequência.",
-  },
-  {
-    number: "03",
-    title: "Encontre um parceiro",
-    text: "Localize estabelecimentos credenciados disponíveis na rede VEKKO em Uberlândia.",
-  },
-  {
-    number: "04",
-    title: "Autorize pelo QR Code",
-    text: "Gere a autorização no aplicativo e apresente o QR Code ao parceiro para validar o atendimento.",
-  },
+  { number: "01", title: "Cadastre seu veículo", text: "Adicione seu carro e deixe a VEKKO organizar tudo por veículo.", icon: "bi-car-front" },
+  { number: "02", title: "Escolha um plano", text: "Selecione a frequência ideal para a sua rotina.", icon: "bi-card-checklist" },
+  { number: "03", title: "Encontre um parceiro", text: "Veja os estabelecimentos credenciados perto de você.", icon: "bi-geo-alt" },
+  { number: "04", title: "Autorize pelo QR Code", text: "Gere o acesso no app e valide diretamente no parceiro.", icon: "bi-qr-code-scan" },
 ] as const;
 
 const benefits = [
   {
     className: "benefit-wide",
+    icon: "bi-calendar2-check",
     eyebrow: "Rotina simples",
-    title: "Seu carro limpo sem transformar isso em mais uma tarefa.",
-    text: "Plano, saldo, parceiros e histórico ficam organizados no aplicativo VEKKO.",
-    visual: "01 — 04",
+    title: "Seu carro limpo sem depender de decisões de última hora.",
+    text: "Plano, saldo, parceiros e histórico organizados em um único aplicativo.",
+    stat: "1 APP",
   },
   {
     className: "benefit-dark",
-    eyebrow: "Autorização segura",
-    title: "Um QR Code para cada atendimento.",
-    text: "A utilização é autorizada pelo cliente e validada pelo estabelecimento credenciado.",
-    visual: "QR",
+    icon: "bi-qr-code-scan",
+    eyebrow: "Uso seguro",
+    title: "Uma autorização para cada atendimento.",
+    text: "O QR Code conecta motorista, veículo e parceiro antes do serviço começar.",
+    stat: "QR",
   },
   {
-    className: "benefit-green",
-    eyebrow: "Previsibilidade",
-    title: "Você sabe o que contratou e quanto pode utilizar.",
-    text: "Regras, elegibilidade e limites ficam claros antes da assinatura.",
-    visual: "R$",
+    className: "benefit-blue",
+    icon: "bi-eye",
+    eyebrow: "Tudo transparente",
+    title: "Você acompanha cada benefício utilizado.",
+    text: "Sem surpresa: frequência, elegibilidade e saldo sempre visíveis.",
+    stat: "100%",
   },
   {
     className: "benefit-network",
+    icon: "bi-buildings",
     eyebrow: "Rede credenciada",
-    title: "Escolha onde cuidar do seu veículo.",
-    text: "A operação começa em Uberlândia/MG e cresce junto com a rede de parceiros VEKKO.",
-    visual: "UDI",
+    title: "Liberdade para escolher onde cuidar do veículo.",
+    text: "A VEKKO começa em Uberlândia e cresce junto com parceiros selecionados.",
+    stat: "UDI",
   },
 ] as const;
 
 const plans = [
-  {
-    name: "Basic",
-    price: "79,90",
-    washes: "2 lavagens por ciclo",
-    description: "O essencial para manter seu veículo sempre limpo.",
-    eligibility: "Hatch e Sedan",
-    accent: false,
-  },
-  {
-    name: "Essential",
-    price: "119,90",
-    washes: "4 lavagens por ciclo",
-    description: "Mais frequência para acompanhar a rotina do seu veículo.",
-    eligibility: "Hatch, Sedan, SUV e Pickup",
-    accent: true,
-  },
-  {
-    name: "Premium",
-    price: "179,90",
-    washes: "8 lavagens por ciclo",
-    description: "Cobertura ampliada para quem cuida do carro toda semana.",
-    eligibility: "Hatch, Sedan, SUV e Pickup",
-    accent: false,
-  },
-  {
-    name: "Ilimitado",
-    price: "379,90",
-    washes: "Máximo de 1 lavagem por dia",
-    description: "Lavagens sem saldo mensal, respeitando o limite diário.",
-    eligibility: "Hatch, Sedan, SUV e Pickup",
-    accent: false,
-  },
+  { name: "Basic", price: "79,90", washes: "2 lavagens por ciclo", description: "Para manter o cuidado em dia sem complicar a rotina.", eligibility: "Hatch e Sedan", accent: false },
+  { name: "Essential", price: "119,90", washes: "4 lavagens por ciclo", description: "A frequência certa para quem usa o carro todos os dias.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: true },
+  { name: "Premium", price: "179,90", washes: "8 lavagens por ciclo", description: "Mais cuidado para quem quer o carro sempre pronto.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false },
+  { name: "Ilimitado", price: "379,90", washes: "Até 1 lavagem por dia", description: "Para uma rotina intensa, sem saldo mensal de lavagens.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false },
 ] as const;
 
 const questions = [
-  {
-    question: "A assinatura pertence ao cliente ou ao veículo?",
-    answer:
-      "Ao veículo. Cada carro cadastrado precisa de uma assinatura própria, com benefícios e utilização controlados individualmente.",
-  },
-  {
-    question: "Quantos veículos posso cadastrar?",
-    answer:
-      "Cada pessoa pode cadastrar até cinco veículos, sempre respeitando as regras de propriedade, elegibilidade e uma assinatura ativa por veículo.",
-  },
-  {
-    question: "Posso utilizar em qualquer estabelecimento?",
-    answer:
-      "Não. Os benefícios são utilizados exclusivamente nos estabelecimentos credenciados e disponíveis na rede VEKKO.",
-  },
-  {
-    question: "Como funciona o QR Code?",
-    answer:
-      "O aplicativo gera uma autorização para o atendimento. O parceiro lê e valida o QR Code antes de concluir o serviço e consumir o benefício.",
-  },
-  {
-    question: "Os benefícios acumulam?",
-    answer:
-      "Não. Os benefícios seguem o ciclo e as regras do plano contratado e não são acumulados para ciclos futuros.",
-  },
-  {
-    question: "Como cancelar?",
-    answer:
-      "O cancelamento será solicitado pelos canais disponíveis no aplicativo, conforme as condições apresentadas na contratação.",
-  },
-  {
-    question: "Quais veículos podem contratar cada plano?",
-    answer:
-      "Hatch e Sedan podem contratar qualquer plano. SUV e Pickup não são elegíveis para o Basic e podem escolher Essential, Premium ou Ilimitado.",
-  },
+  { question: "A assinatura pertence ao cliente ou ao veículo?", answer: "Ao veículo. Cada carro cadastrado tem sua própria assinatura, benefícios e histórico de utilização." },
+  { question: "Quantos veículos posso cadastrar?", answer: "Cada pessoa pode cadastrar até cinco veículos. Cada um pode ter uma assinatura ativa individual." },
+  { question: "Posso utilizar em qualquer estabelecimento?", answer: "Os benefícios são utilizados nos estabelecimentos credenciados que aparecem como disponíveis no aplicativo VEKKO." },
+  { question: "Como funciona o QR Code?", answer: "Você gera uma autorização no aplicativo. O parceiro lê o QR Code, confere o veículo e valida o atendimento antes do serviço." },
+  { question: "Os benefícios acumulam?", answer: "Não. Cada plano segue o próprio ciclo e os benefícios não utilizados não passam para o ciclo seguinte." },
+  { question: "Quais veículos podem contratar cada plano?", answer: "Hatch e Sedan podem contratar qualquer plano. SUV e Pickup podem escolher Essential, Premium ou Ilimitado." },
 ] as const;
+
+function PhoneMockup({ className = "" }: { className?: string }) {
+  return (
+    <div className={`app-phone ${className}`} aria-label="Prévia conceitual do aplicativo VEKKO" role="img">
+      <div className="phone-island" />
+      <div className="phone-statusbar">
+        <span>9:41</span>
+        <span aria-hidden="true"><i className="bi bi-reception-4" /><i className="bi bi-wifi" /><i className="bi bi-battery-full" /></span>
+      </div>
+      <div className="phone-appbar">
+        <Image src="/vekko-logo-navbar.png" alt="VEKKO" width={108} height={26} />
+        <i className="bi bi-bell" aria-hidden="true" />
+      </div>
+      <div className="phone-search"><i className="bi bi-search" aria-hidden="true" />Buscar parceiro próximo</div>
+      <div className="phone-map" aria-hidden="true">
+        <span className="map-line map-line-a" />
+        <span className="map-line map-line-b" />
+        <span className="map-line map-line-c" />
+        <span className="app-pin pin-a"><i className="bi bi-droplet-fill" /></span>
+        <span className="app-pin pin-b"><i className="bi bi-droplet-fill" /></span>
+        <span className="app-location"><i className="bi bi-navigation-fill" /></span>
+      </div>
+      <div className="phone-partner">
+        <span>Mais próximo</span>
+        <strong>Vekko Wash · Centro</strong>
+        <small><i className="bi bi-star-fill" aria-hidden="true" /> 4,9 · 1,2 km de você</small>
+      </div>
+      <div className="phone-tabbar" aria-hidden="true"><i className="bi bi-house-fill" /><i className="bi bi-geo-alt" /><i className="bi bi-qr-code-scan" /><i className="bi bi-person" /></div>
+    </div>
+  );
+}
+
+function RegisterPhone() {
+  return (
+    <div className="app-phone register-phone" aria-label="Tela conceitual de cadastro de veículo" role="img">
+      <div className="phone-island" />
+      <div className="phone-statusbar">
+        <span>9:41</span>
+        <span aria-hidden="true"><i className="bi bi-reception-4" /><i className="bi bi-wifi" /><i className="bi bi-battery-full" /></span>
+      </div>
+      <span className="phone-back" aria-hidden="true"><i className="bi bi-chevron-left" /></span>
+      <div className="register-content">
+        <span className="phone-step">Passo 1 de 4</span>
+        <h3>Cadastre seu veículo</h3>
+        <p>Comece pela placa. É rápido e seguro.</p>
+        <div className="register-field"><b>Placa do veículo</b><span>ABC1D23</span></div>
+        <div className="register-field"><b>Marca</b><span>Selecione a marca</span></div>
+        <div className="register-field"><b>Modelo</b><span>Selecione o modelo</span></div>
+        <span className="phone-primary">Adicionar veículo</span>
+      </div>
+      <div className="phone-homebar" />
+    </div>
+  );
+}
 
 export function HomeExperience() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -140,107 +126,18 @@ export function HomeExperience() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const root = rootRef.current;
-    if (!root) return;
-
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (reduceMotion) return;
+    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = gsap.context(() => {
-      gsap.from("[data-hero-reveal]", {
-        delay: 0.12,
-        duration: 0.9,
-        ease: "power3.out",
-        opacity: 0,
-        stagger: 0.1,
-        y: 28,
-      });
-
+      gsap.from("[data-hero-reveal]", { delay: 0.08, duration: 0.86, ease: "power3.out", opacity: 0, stagger: 0.08, y: 26 });
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
-        gsap.from(element, {
-          duration: 0.82,
-          ease: "power3.out",
-          opacity: 0,
-          scrollTrigger: {
-            start: "top 84%",
-            toggleActions: "play none none none",
-            trigger: element,
-          },
-          y: 44,
-        });
+        gsap.from(element, { duration: 0.76, ease: "power3.out", opacity: 0, scrollTrigger: { start: "top 86%", trigger: element }, y: 38 });
       });
-
-      gsap.to(".marquee-track", {
-        ease: "none",
-        scrollTrigger: {
-          end: "bottom top",
-          scrub: 1,
-          start: "top bottom",
-          trigger: ".marquee-band",
-        },
-        xPercent: -16,
-      });
+      gsap.to(".hero-phone", { duration: 5, ease: "sine.inOut", repeat: -1, y: -10, yoyo: true });
+      gsap.to(".hero-car", { duration: 6, ease: "sine.inOut", repeat: -1, x: 8, yoyo: true });
     }, root);
 
-    const magneticCleanups = Array.from(
-      root.querySelectorAll<HTMLElement>("[data-magnetic-zone]"),
-    ).map((zone) => {
-      const button = zone.querySelector<HTMLElement>("[data-magnetic-button]");
-      if (!button) return () => undefined;
-
-      const handlePointerMove = (event: PointerEvent) => {
-        if (event.pointerType !== "mouse") return;
-
-        const rect = zone.getBoundingClientRect();
-        const x = gsap.utils.mapRange(
-          rect.left,
-          rect.right,
-          -rect.width / 2,
-          rect.width / 2,
-          event.clientX,
-        );
-        const y = gsap.utils.mapRange(
-          rect.top,
-          rect.bottom,
-          -rect.height / 2,
-          rect.height / 2,
-          event.clientY,
-        );
-
-        gsap.to(button, {
-          duration: 0.4,
-          ease: "power2.out",
-          overwrite: true,
-          x: x * 0.6,
-          y: y * 0.6,
-        });
-      };
-
-      const resetButton = () => {
-        gsap.to(button, {
-          duration: 0.7,
-          ease: "elastic.out(1, 0.4)",
-          overwrite: true,
-          x: 0,
-          y: 0,
-        });
-      };
-
-      zone.addEventListener("pointermove", handlePointerMove);
-      zone.addEventListener("pointerleave", resetButton);
-
-      return () => {
-        zone.removeEventListener("pointermove", handlePointerMove);
-        zone.removeEventListener("pointerleave", resetButton);
-        gsap.killTweensOf(button);
-      };
-    });
-
-    return () => {
-      magneticCleanups.forEach((cleanup) => cleanup());
-      context.revert();
-    };
+    return () => context.revert();
   }, []);
 
   return (
@@ -251,225 +148,59 @@ export function HomeExperience() {
           <div className="site-shell hero-shell">
             <div className="hero-grid">
               <div className="hero-copy">
-                <div className="eyebrow-pill" data-hero-reveal>
-                  <span className="status-dot" />
-                  Piloto inicial · Uberlândia/MG
-                </div>
-                <h1 data-hero-reveal>
-                  Cuidar do seu carro ficou <em>mais simples.</em>
-                </h1>
-                <p className="hero-lead" data-hero-reveal>
-                  Assine um plano por veículo, encontre parceiros credenciados e
-                  utilize seus benefícios diretamente pelo aplicativo VEKKO.
-                </p>
+                <div className="eyebrow-pill" data-hero-reveal><span className="status-dot" />Piloto inicial · Uberlândia</div>
+                <h1 data-hero-reveal>Lave seu carro <em>sem pagar por cada lavagem.</em></h1>
+                <p className="hero-lead" data-hero-reveal>Assine um plano para o seu veículo, lave em parceiros credenciados e controle tudo pelo aplicativo VEKKO.</p>
                 <div className="hero-actions" data-hero-reveal>
-                  <div className="magnetic-zone" data-magnetic-zone>
-                    <a
-                      className="button button-magnetic"
-                      data-magnetic-button
-                      href="#planos"
-                    >
-                      <span>Conhecer planos</span>
-                      <i className="bi bi-arrow-down" aria-hidden="true" />
-                    </a>
-                  </div>
-                  <a className="text-link" href="/seja-parceiro">
-                    Quero ser parceiro
-                    <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
-                  </a>
+                  <a className="button button-primary" href="#planos">Conhecer planos <i className="bi bi-arrow-down" aria-hidden="true" /></a>
+                  <a className="text-link" href="#como-funciona">Como funciona <i className="bi bi-arrow-up-right" aria-hidden="true" /></a>
                 </div>
+                <div className="hero-proof" data-hero-reveal><span>Planos por veículo</span><span>Parceiros credenciados</span><span>Tudo pelo app</span></div>
               </div>
 
-              <aside className="hero-definition" data-hero-reveal>
-                <span className="hero-definition-label">VEKKO em uma frase</span>
-                <p>
-                  Uma plataforma de assinatura e benefícios automotivos por
-                  veículo.
-                </p>
-                <div className="hero-definition-list">
-                  <span><b>01</b> Uma assinatura para cada veículo</span>
-                  <span><b>02</b> Uso em parceiros credenciados</span>
-                  <span><b>03</b> Validação segura pelo aplicativo</span>
-                </div>
-              </aside>
-            </div>
-
-            <div
-              className="product-showcase"
-              data-hero-reveal
-              aria-label="Prévia conceitual da plataforma VEKKO"
-            >
-              <div className="product-window">
-                <div className="product-toolbar">
-                  <div className="product-wordmark">
-                    <Image src="/vekko-symbol.png" alt="" width="32" height="25" priority />
-                    <strong>VEKKO</strong>
-                  </div>
-                  <span className="product-toolbar-location">Uberlândia/MG</span>
-                  <span className="product-avatar">IS</span>
-                </div>
-
-                <div className="product-dashboard">
-                  <nav className="product-nav" aria-label="Prévia da navegação do aplicativo">
-                    <strong>Meu veículo</strong>
-                    <span>Plano e benefícios</span>
-                    <span>Parceiros próximos</span>
-                    <span>Histórico de uso</span>
-                  </nav>
-
-                  <div className="product-content">
-                    <div className="product-content-heading">
-                      <div>
-                        <span>Visão do veículo</span>
-                        <h2>Olá, Isaac.</h2>
-                      </div>
-                      <span className="product-status">Plano ativo</span>
-                    </div>
-
-                    <div className="product-metrics">
-                      <article className="product-metric product-metric-dark">
-                        <span>Plano atual</span>
-                        <strong>Essential</strong>
-                        <small>ABC1D23 · Sedan</small>
-                      </article>
-                      <article className="product-metric">
-                        <span>Benefícios disponíveis</span>
-                        <strong>3 de 4</strong>
-                        <small>neste ciclo</small>
-                      </article>
-                    </div>
-
-                    <article className="product-partner-card">
-                      <div>
-                        <span>Parceiro credenciado próximo</span>
-                        <strong>Auto Clean · Centro</strong>
-                      </div>
-                      <div className="product-partner-distance">
-                        <strong>1,2 km</strong>
-                        <span>
-                          Ver rota <i className="bi bi-arrow-right" aria-hidden="true" />
-                        </span>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-              </div>
-
-              <div className="product-phone">
-                <div className="phone-topline">
-                  <span>9:41</span>
-                  <span className="phone-system-icons" aria-hidden="true">
-                    <i className="bi bi-reception-4" />
-                    <i className="bi bi-wifi" />
-                    <i className="bi bi-battery-full" />
-                  </span>
-                </div>
-                <div className="phone-brand">
-                  <Image src="/vekko-symbol.png" alt="" width="26" height="20" />
-                </div>
-                <div className="phone-greeting">Seu plano</div>
-                <div className="vehicle-chip">
-                  <span>Veículo</span>
-                  <strong>ABC1D23 · Sedan</strong>
-                </div>
-                <div className="phone-plan">
-                  <span>Plano Essential</span>
-                  <strong>3 de 4</strong>
-                  <small>benefícios disponíveis</small>
-                  <div className="phone-progress"><i /></div>
-                </div>
-                <div className="phone-qr">
-                  <b aria-hidden="true"><i className="bi bi-qr-code-scan" /></b>
-                  <span>Autorizar atendimento</span>
-                </div>
-              </div>
-
-              <div className="product-assurance">
-                <span>Seguro em cada uso</span>
-                <strong>Autorização pelo app + QR Code</strong>
+              <div className="hero-visual" data-hero-reveal>
+                <div className="route-orbit" aria-hidden="true"><i /><i /><i /></div>
+                <PhoneMockup className="hero-phone" />
+                <Image className="hero-car" src="/hero-car.webp" alt="Automóvel representando os veículos atendidos pela VEKKO" width={1586} height={992} priority />
+                <div className="floating-plan"><span>Plano ativo</span><strong>Vekko Essential</strong><p><b>4</b> lavagens por ciclo</p><small>Próxima renovação · 12 set</small></div>
+                <div className="floating-location" aria-hidden="true"><i className="bi bi-geo-alt-fill" /></div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="trust-strip" aria-label="Pilares da VEKKO">
-          <div className="site-shell trust-grid">
-            <span>Simples para o motorista</span>
-            <span>Seguro para o parceiro</span>
-            <span>Transparente em cada uso</span>
-          </div>
-        </section>
-
-        <section className="section" id="como-funciona">
-          <div className="site-shell">
-            <div className="section-heading" data-reveal>
-              <div>
-                <span className="section-kicker">Como funciona</span>
-                <h2>Da assinatura ao carro limpo em quatro passos.</h2>
+        <section className="section how-section" id="como-funciona">
+          <div className="site-shell how-grid">
+            <div className="how-copy" data-reveal>
+              <span className="section-kicker">Como funciona</span>
+              <h2>Da assinatura ao carro limpo em quatro passos.</h2>
+              <p>Tudo acontece pelo app — do plano à autorização da lavagem.</p>
+              <div className="steps-list">
+                {steps.map((step, index) => (
+                  <article className={index === 0 ? "active" : ""} key={step.number}>
+                    <span>{step.number}</span><i className={`bi ${step.icon}`} aria-hidden="true" /><div><h3>{step.title}</h3><p>{step.text}</p></div>
+                  </article>
+                ))}
               </div>
-              <p>
-                A VEKKO organiza toda a jornada pelo veículo — do plano à
-                autorização do atendimento.
-              </p>
             </div>
-
-            <div className="steps-grid">
-              {steps.map((step) => (
-                <article className="step-card" data-reveal key={step.number}>
-                  <span>{step.number}</span>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.text}</p>
-                  </div>
-                </article>
-              ))}
+            <div className="how-visual" data-reveal>
+              <span className="how-orbit orbit-one" aria-hidden="true" /><span className="how-orbit orbit-two" aria-hidden="true" />
+              <RegisterPhone /><div className="how-badge"><i className="bi bi-shield-check" /> Cadastro protegido</div>
             </div>
           </div>
         </section>
-
-        <div className="marquee-band" aria-hidden="true">
-          <div className="marquee-track">
-            ASSINE · ENCONTRE · AUTORIZE · CUIDE · ASSINE · ENCONTRE ·
-            AUTORIZE · CUIDE ·
-          </div>
-        </div>
 
         <section className="section section-soft" id="beneficios">
           <div className="site-shell">
-            <div className="section-heading compact" data-reveal>
-              <div>
-                <span className="section-kicker">Benefícios</span>
-                <h2>Tecnologia para simplificar o cuidado.</h2>
-              </div>
+            <div className="section-heading" data-reveal>
+              <div><span className="section-kicker">Feito para a vida real</span><h2>Menos improviso. Mais cuidado.</h2></div>
+              <p>A VEKKO transforma uma tarefa recorrente em uma experiência simples, previsível e rastreável.</p>
             </div>
-            <div className="benefits-feature">
-              {benefits.slice(0, 1).map((benefit) => (
-                <article
-                  className={`benefit-card ${benefit.className}`}
-                  data-reveal
-                  key={benefit.title}
-                >
-                  <span className="benefit-visual">{benefit.visual}</span>
-                  <div>
-                    <span className="section-kicker">{benefit.eyebrow}</span>
-                    <h3>{benefit.title}</h3>
-                    <p>{benefit.text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <div className="benefits-deck" data-reveal>
-              {benefits.slice(1).map((benefit, index, deck) => (
-                <article
-                  className={`benefit-card benefit-deck-card ${benefit.className}${index === deck.length - 1 ? " benefit-deck-last" : ""}`}
-                  key={benefit.title}
-                >
-                  <span className="benefit-visual">{benefit.visual}</span>
-                  <div>
-                    <span className="section-kicker">{benefit.eyebrow}</span>
-                    <h3>{benefit.title}</h3>
-                    <p>{benefit.text}</p>
-                  </div>
+            <div className="benefits-deck">
+              {benefits.map((benefit) => (
+                <article className={`benefit-card ${benefit.className}`} data-reveal key={benefit.title}>
+                  <div className="benefit-top"><i className={`bi ${benefit.icon}`} aria-hidden="true" /><span>{benefit.stat}</span></div>
+                  <div><span className="section-kicker">{benefit.eyebrow}</span><h3>{benefit.title}</h3><p>{benefit.text}</p></div>
                 </article>
               ))}
             </div>
@@ -479,134 +210,60 @@ export function HomeExperience() {
         <section className="section plans-section" id="planos">
           <div className="site-shell">
             <div className="section-heading" data-reveal>
-              <div>
-                <span className="section-kicker">Planos VEKKO</span>
-                <h2>Uma frequência para cada rotina.</h2>
-              </div>
-              <p>
-                Valores mensais por veículo. A disponibilidade final considera
-                o tipo do veículo e as regras de elegibilidade.
-              </p>
+              <div><span className="section-kicker">Planos VEKKO</span><h2>Escolha sua frequência.</h2></div>
+              <p>Uma assinatura mensal para cada veículo. Você escolhe o plano e acompanha tudo pelo app.</p>
             </div>
-
             <div className="plans-grid" data-reveal>
               {plans.map((plan) => (
-                <article
-                  className={`plan-card${plan.accent ? " plan-featured" : ""}`}
-                  key={plan.name}
-                >
-                  {plan.accent ? <span className="plan-tag">Mais versátil</span> : null}
+                <article className={`plan-card${plan.accent ? " plan-featured" : ""}`} key={plan.name}>
+                  {plan.accent ? <span className="plan-tag">Mais escolhido</span> : <span className="plan-index">VEKKO</span>}
                   <div className="plan-name">{plan.name}</div>
-                  <div className="plan-price">
-                    <sup>R$</sup>
-                    <strong>{plan.price}</strong>
-                    <span>/mês</span>
-                  </div>
-                  <p>{plan.description}</p>
-                  <ul>
-                    <li>
-                      <i className="bi bi-check-circle" aria-hidden="true" />
-                      <span>{plan.washes}</span>
-                    </li>
-                    <li>
-                      <i className="bi bi-check-circle" aria-hidden="true" />
-                      <span>Uso na rede credenciada</span>
-                    </li>
-                    <li>
-                      <i className="bi bi-check-circle" aria-hidden="true" />
-                      <span>Autorização pelo aplicativo</span>
-                    </li>
-                  </ul>
-                  <div className="plan-eligibility">
-                    <span>Veículos elegíveis</span>
-                    <strong>{plan.eligibility}</strong>
-                  </div>
-                  <a className="button button-plan" href="#aplicativo">
-                    Quero esse plano <i className="bi bi-arrow-right" aria-hidden="true" />
-                  </a>
+                  <div className="plan-price"><sup>R$</sup><strong>{plan.price}</strong><span>/mês</span></div>
+                  <p>{plan.description}</p><div className="plan-divider" />
+                  <ul><li><i className="bi bi-check2" aria-hidden="true" />{plan.washes}</li><li><i className="bi bi-check2" aria-hidden="true" />Rede credenciada</li><li><i className="bi bi-check2" aria-hidden="true" />Autorização pelo app</li></ul>
+                  <div className="plan-eligibility"><span>Veículos elegíveis</span><strong>{plan.eligibility}</strong></div>
+                  <a className="button button-plan" href="#aplicativo">Quero esse plano <i className="bi bi-arrow-right" /></a>
                 </article>
               ))}
             </div>
-            <p className="plans-note" data-reveal>
-              O plano Ilimitado não representa utilizações simultâneas ou sem
-              regra: há limite máximo de uma lavagem por veículo a cada dia.
-            </p>
+            <p className="plans-note" data-reveal>* Benefícios não acumulam. O plano Ilimitado permite no máximo uma lavagem por veículo ao dia.</p>
           </div>
         </section>
 
         <section className="section network-section" id="rede">
           <div className="site-shell network-grid">
-            <div data-reveal>
-              <span className="section-kicker section-kicker-light">Rede de parceiros</span>
-              <h2>Começamos por Uberlândia. E queremos crescer junto com a cidade.</h2>
-              <p>
-                Os benefícios VEKKO são utilizados exclusivamente em
-                estabelecimentos credenciados. Em breve, o aplicativo mostrará
-                a rede disponível, serviços e distância de cada parceiro.
-              </p>
-              <a className="button button-light" href="/seja-parceiro">
-                Quero fazer parte da rede
-                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
-              </a>
+            <div className="network-copy" data-reveal>
+              <span className="section-kicker section-kicker-light">Rede VEKKO</span><h2>Encontre um parceiro perto de você.</h2>
+              <p>Escolha pelo mapa, confira os serviços disponíveis e autorize o atendimento sem sair do aplicativo.</p>
+              <ul><li><i className="bi bi-check-circle-fill" /> Parceiros credenciados</li><li><i className="bi bi-check-circle-fill" /> Distância e rota no app</li><li><i className="bi bi-check-circle-fill" /> Avaliações após o atendimento</li></ul>
+              <Link className="button button-light" href="/seja-parceiro">Quero ser parceiro <i className="bi bi-arrow-up-right" /></Link>
             </div>
-            <div className="map-card" data-reveal aria-label="Operação inicial em Uberlândia, Minas Gerais">
-              <div className="map-roads road-one" />
-              <div className="map-roads road-two" />
-              <div className="map-roads road-three" />
-              <div className="map-pin">
-                <i className="bi bi-geo-alt-fill" aria-hidden="true" />
-                Uberlândia
-              </div>
-              <div className="map-caption">
-                <span>Operação inicial</span>
-                <strong>Uberlândia · MG</strong>
-              </div>
+            <div className="network-map" data-reveal aria-label="Representação da rede VEKKO em Uberlândia">
+              <div className="network-road road-a" /><div className="network-road road-b" /><div className="network-road road-c" />
+              <span className="network-pin pin-1"><i className="bi bi-droplet-fill" /></span><span className="network-pin pin-2"><i className="bi bi-droplet-fill" /></span><span className="network-pin pin-3"><i className="bi bi-droplet-fill" /></span>
+              <div className="network-card"><span>Operação inicial</span><strong>Uberlândia · MG</strong><small>Novos parceiros em credenciamento</small></div>
             </div>
           </div>
         </section>
 
         <section className="section partner-preview">
           <div className="site-shell partner-panel" data-reveal>
-            <div>
-              <span className="section-kicker">Para estabelecimentos</span>
-              <h2>Mais clientes para o seu estabelecimento, com uma operação simples e segura.</h2>
-            </div>
-            <div>
-              <p>
-                Faça parte da rede VEKKO, receba clientes assinantes e valide
-                os atendimentos pelo portal do parceiro.
-              </p>
-              <div className="partner-mini-steps">
-                <span><b>01</b> Receba o cliente</span>
-                <span><b>02</b> Valide o QR Code</span>
-                <span><b>03</b> Conclua o atendimento</span>
-              </div>
-              <a className="button button-green" href="/seja-parceiro">
-                Quero ser parceiro <i className="bi bi-arrow-right" aria-hidden="true" />
-              </a>
+            <div className="partner-mark"><Image src="/vekko-symbol.png" alt="" width={88} height={70} /><span>PARCEIROS</span></div>
+            <div className="partner-panel-copy">
+              <span className="section-kicker">Para estabelecimentos</span><h2>Clientes recorrentes. Operação simples.</h2>
+              <p>Entre para a rede VEKKO, valide os atendimentos pelo portal e acompanhe cada serviço realizado.</p>
+              <div className="partner-mini-steps"><span><b>01</b> Receba</span><span><b>02</b> Valide</span><span><b>03</b> Conclua</span></div>
+              <Link className="button button-primary" href="/seja-parceiro">Conhecer parceria <i className="bi bi-arrow-right" /></Link>
             </div>
           </div>
         </section>
 
         <section className="section faq-section" id="faq">
           <div className="site-shell faq-grid">
-            <div className="faq-intro" data-reveal>
-              <span className="section-kicker">FAQ</span>
-              <h2>Dúvidas? A gente simplifica.</h2>
-              <p>
-                O básico que você precisa saber antes de cadastrar seu veículo
-                e escolher um plano.
-              </p>
-            </div>
+            <div className="faq-intro" data-reveal><span className="section-kicker">Dúvidas frequentes</span><h2>O básico, sem letra miúda.</h2><p>As principais respostas para escolher seu plano com segurança.</p></div>
             <div className="faq-list" data-reveal>
               {questions.map((item, index) => (
-                <details key={item.question} open={index === 0}>
-                  <summary>
-                    {item.question}
-                    <span aria-hidden="true"><i className="bi bi-plus-lg" /></span>
-                  </summary>
-                  <p>{item.answer}</p>
-                </details>
+                <details key={item.question} open={index === 0}><summary>{item.question}<span aria-hidden="true"><i className="bi bi-plus-lg" /></span></summary><p>{item.answer}</p></details>
               ))}
             </div>
           </div>
@@ -614,25 +271,10 @@ export function HomeExperience() {
 
         <section className="app-cta grid-surface" id="aplicativo">
           <div className="site-shell app-cta-inner" data-reveal>
-            <span className="app-orbit">V</span>
-            <span className="section-kicker">Aplicativo VEKKO</span>
-            <h2>Seu plano, seu veículo e seus benefícios em um só lugar.</h2>
-            <p>
-              Acompanhe a chegada da VEKKO a Uberlândia e seja avisado quando o
-              aplicativo estiver disponível para contratação.
-            </p>
-            <div className="hero-actions center-actions">
-              <a
-                className="button button-green"
-                href="mailto:contato@vekko.com.br?subject=Quero%20acompanhar%20o%20lançamento%20da%20VEKKO"
-              >
-                Acompanhar lançamento
-                <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
-              </a>
-              <a className="text-link" href="/seja-parceiro">
-                Cadastrar estabelecimento
-              </a>
+            <div className="app-cta-copy"><span className="section-kicker">Aplicativo VEKKO</span><h2>Seu carro limpo começa com um plano.</h2><p>Acompanhe o lançamento em Uberlândia e saiba quando as assinaturas estiverem disponíveis.</p>
+              <div className="hero-actions"><a className="button button-primary" href="mailto:contato@vekko.com.br?subject=Quero%20acompanhar%20o%20lançamento%20da%20VEKKO">Acompanhar lançamento <i className="bi bi-arrow-up-right" /></a><Link className="text-link" href="/seja-parceiro">Cadastrar estabelecimento</Link></div>
             </div>
+            <div className="app-cta-visual" aria-hidden="true"><Image src="/vekko-symbol.png" alt="" width={470} height={370} /></div>
           </div>
         </section>
       </main>
