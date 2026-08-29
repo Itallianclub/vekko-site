@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import "./site-footer.css";
 
 export function SiteFooter() {
   return (

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import "./site-header.css";
 
 const navigation = [
   { href: "/#como-funciona", label: "Como funciona" },

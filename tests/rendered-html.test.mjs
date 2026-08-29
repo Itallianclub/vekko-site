@@ -63,7 +63,7 @@ test("server-renders the VEKKO institutional home", async () => {
   assert.match(html, /bi-arrow-up/);
   assert.match(html, /vekko-logo-navbar\.png/);
   assert.match(html, /vekko-symbol\.png/);
-  assert.match(html, /hero-car\.webp/);
+  assert.match(html, /golf\.png/);
   assert.match(html, /Planos VEKKO/);
   assert.match(html, /79,90/);
   assert.match(html, /379,90/);

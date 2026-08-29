@@ -1,0 +1,24 @@
+.site-footer { background: #030508; color: white; padding: 72px 0 24px; }
+.footer-grid { display: grid; gap: 52px; grid-template-columns: 1.5fr repeat(3, 0.72fr); }
+.brand-footer { gap: 10px; }
+.brand-footer img { height: auto; width: 36px; }
+.brand-footer span { font-size: 1rem; font-weight: 670; letter-spacing: 0.12em; }
+.footer-grid > div:first-child > p { color: #929ba7; font-size: 0.69rem; line-height: 1.65; max-width: 290px; }
+.footer-grid > div:not(:first-child) { align-content: start; display: grid; gap: 11px; }
+.footer-grid strong { color: white; font-size: 0.68rem; margin-bottom: 8px; }
+.footer-grid a, .footer-grid span { color: #929ba7; font-size: 0.64rem; }
+.footer-grid a:hover { color: white; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); color: #707985; display: flex; font-size: 0.58rem; justify-content: space-between; margin-top: 52px; padding-top: 22px; }
+
+@media (max-width: 1080px) {
+  .footer-grid { grid-template-columns: 1.2fr repeat(3, 0.8fr); }
+}
+
+@media (max-width: 820px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+}
