@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "../components/SiteFooter";
-import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/layout/site-footer/site-footer";
+import { SiteHeader } from "../components/layout/site-header/site-header";
+import "./seja-parceiro.css";
 
 export const metadata: Metadata = {
   title: "Seja um parceiro",

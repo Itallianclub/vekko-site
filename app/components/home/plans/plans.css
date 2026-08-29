@@ -1,0 +1,38 @@
+.plans-section { background: white; }
+.plans-grid { display: grid; gap: 14px; grid-template-columns: repeat(4, 1fr); }
+.plan-card { background: #f7f9fb; border: 1px solid var(--line); border-radius: 22px; display: flex; flex-direction: column; min-height: 570px; padding: 25px 22px 21px; position: relative; }
+.plan-featured { background: var(--ink); border-color: var(--ink); box-shadow: 0 24px 54px rgba(6, 11, 18, 0.18); color: white; transform: translateY(-10px); }
+.plan-tag, .plan-index { align-items: center; align-self: flex-start; border-radius: 999px; display: inline-flex; font-family: var(--font-geist-mono), monospace; font-size: 0.51rem; font-weight: 700; height: 25px; letter-spacing: 0.06em; padding: 0 10px; text-transform: uppercase; }
+.plan-tag { background: var(--blue); color: white; }
+.plan-index { border: 1px solid var(--line); color: var(--muted); }
+.plan-name { font-size: 1.12rem; font-weight: 670; margin-top: 27px; }
+.plan-price { align-items: end; display: flex; margin-top: 11px; }
+.plan-price sup { align-self: flex-start; font-size: 0.6rem; margin: 9px 3px 0 0; }
+.plan-price strong { font-size: clamp(2.25rem, 3vw, 3.25rem); letter-spacing: -0.075em; line-height: 1; }
+.plan-price > span { color: var(--muted); font-size: 0.61rem; margin: 0 0 5px 4px; }
+.plan-featured .plan-price > span { color: #a7b0bc; }
+.plan-card > p { color: var(--muted); font-size: 0.68rem; line-height: 1.55; margin: 15px 0 0; min-height: 52px; }
+.plan-featured > p { color: #aeb7c2; }
+.plan-divider { background: var(--line); height: 1px; margin: 17px 0; }
+.plan-featured .plan-divider { background: rgba(255, 255, 255, 0.13); }
+.plan-card ul { display: grid; gap: 11px; list-style: none; margin: 0; padding: 0; }
+.plan-card li { align-items: center; display: flex; font-size: 0.66rem; gap: 8px; }
+.plan-card li .bi { color: var(--blue); font-size: 0.9rem; }
+.plan-eligibility { border-top: 1px solid var(--line); display: grid; gap: 5px; margin-top: auto; padding-top: 16px; }
+.plan-featured .plan-eligibility { border-color: rgba(255, 255, 255, 0.13); }
+.plan-eligibility span { color: var(--muted); font-size: 0.51rem; text-transform: uppercase; }
+.plan-eligibility strong { font-size: 0.62rem; line-height: 1.4; }
+.button-plan { background: var(--ink); border-radius: 12px; color: white; margin-top: 18px; width: 100%; }
+.plan-featured .button-plan { background: white; color: var(--ink); }
+.plans-note { color: var(--muted); font-size: 0.61rem; margin: 25px 0 0; text-align: center; }
+
+@media (max-width: 1080px) {
+  .plans-grid { grid-template-columns: repeat(2, 1fr); }
+  .plan-card { min-height: 525px; }
+  .plan-featured { transform: none; }
+}
+
+@media (max-width: 560px) {
+  .plans-grid { grid-template-columns: 1fr; }
+  .plan-card { min-height: 520px; }
+}

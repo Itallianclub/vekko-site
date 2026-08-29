@@ -1,0 +1,179 @@
+.how-section {
+  background: var(--ink);
+  color: var(--white);
+  overflow: clip;
+  padding-block: clamp(7rem, 11vw, 11rem);
+}
+
+.how-process {
+  display: grid;
+  grid-template-columns: minmax(20rem, 0.84fr) minmax(28rem, 1.16fr);
+  gap: clamp(4rem, 9vw, 10rem);
+}
+
+.how-sticky {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+}
+
+.how-copy h2 em {
+  color: #55acff;
+  font-style: normal;
+}
+
+.how-copy > p {
+  max-width: 29rem;
+  margin: 1.4rem 0 0;
+  color: #a9b3c0;
+  font-size: 0.89rem;
+  line-height: 1.7;
+}
+
+.how-progress {
+  position: relative;
+  width: 2px;
+  height: 7rem;
+  margin-top: 2.5rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.how-progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--blue);
+  transform: scaleY(0.25);
+  transform-origin: top;
+}
+
+.how-steps {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.how-step {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  min-height: clamp(24rem, 58vh, 34rem);
+  padding-block: 4rem;
+  opacity: 0.3;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  transform: translateY(1.25rem);
+  transition: opacity 450ms ease, transform 450ms ease;
+}
+
+.how-step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.how-step-number {
+  align-self: start;
+  color: #55acff;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+}
+
+.how-step-copy > span {
+  color: #55acff;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.how-step h3 {
+  max-width: 36rem;
+  margin: 0.8rem 0 0;
+  color: var(--white);
+  font-size: clamp(2rem, 3.5vw, 4.2rem);
+  font-weight: 590;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.how-step p {
+  max-width: 28rem;
+  margin: 1.4rem 0 0;
+  color: #a9b3c0;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.how-step-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: #8e99a8;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  transition: color 350ms ease, background 350ms ease, border-color 350ms ease, box-shadow 350ms ease, transform 350ms ease;
+}
+
+.how-step.is-active .how-step-marker {
+  color: var(--white);
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 8px rgba(8, 120, 232, 0.13);
+  transform: scale(1.06);
+}
+
+@media (max-width: 1080px) {
+  .how-process {
+    grid-template-columns: minmax(18rem, 0.85fr) minmax(25rem, 1.15fr);
+    gap: 4rem;
+  }
+
+  .how-step { gap: 1.4rem; }
+}
+
+@media (max-width: 820px) {
+  .how-section { padding-block: 84px; }
+
+  .how-process {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .how-sticky {
+    position: relative;
+    top: 0;
+    max-width: 650px;
+  }
+
+  .how-progress { display: none; }
+
+  .how-step {
+    min-height: 22rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .how-step {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 1rem;
+    min-height: 20rem;
+    padding-block: 3rem;
+  }
+
+  .how-step h3 {
+    font-size: clamp(2rem, 11vw, 3.15rem);
+  }
+
+  .how-step-marker { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-step {
+    opacity: 1;
+    transform: none;
+  }
+
+  .how-progress { display: none; }
+}

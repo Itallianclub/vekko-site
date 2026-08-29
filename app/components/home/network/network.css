@@ -1,0 +1,313 @@
+.network-section {
+  overflow: hidden;
+  color: var(--ink);
+  background: #fbfcfe;
+}
+
+.network-grid {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.7fr) minmax(32rem, 1.3fr);
+  align-items: center;
+  gap: clamp(4rem, 8vw, 8rem);
+}
+
+.network-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.network-copy h2 {
+  max-width: 30rem;
+  font-size: clamp(3rem, 5vw, 5rem);
+}
+
+.network-copy h2 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.network-copy > p {
+  max-width: 27rem;
+  margin: 24px 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+
+.network-copy ul {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.network-copy li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  color: #3e4855;
+  font-size: 0.7rem;
+}
+
+.network-copy li .bi {
+  color: var(--blue);
+  font-size: 0.92rem;
+}
+
+.network-copy .button {
+  min-width: 205px;
+  box-shadow: 0 16px 34px rgba(8, 120, 232, 0.24);
+}
+
+.network-map {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(244, 247, 250, 0.86), rgba(244, 247, 250, 0.86)),
+    radial-gradient(circle at 50% 50%, rgba(8, 120, 232, 0.08), transparent 42%);
+  border: 1px solid rgba(6, 11, 18, 0.05);
+  border-radius: 28px;
+  box-shadow: 0 28px 70px rgba(42, 67, 92, 0.11);
+}
+
+.network-map::before,
+.network-map::after {
+  position: absolute;
+  z-index: 4;
+  width: 118px;
+  height: 118px;
+  background-image: radial-gradient(rgba(8, 120, 232, 0.42) 1.6px, transparent 1.8px);
+  background-size: 14px 14px;
+  content: "";
+}
+
+.network-map::before {
+  top: -30px;
+  right: -32px;
+}
+
+.network-map::after {
+  right: -22px;
+  bottom: -34px;
+}
+
+.network-streets {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(213, 220, 228, 0.62);
+  pointer-events: none;
+}
+
+.network-streets path {
+  fill: none;
+  stroke: currentColor;
+}
+
+.street-main {
+  stroke-width: 28;
+}
+
+.street-secondary {
+  stroke: rgba(255, 255, 255, 0.84) !important;
+  stroke-width: 10;
+}
+
+.street-diagonal {
+  stroke: rgba(198, 208, 218, 0.48) !important;
+  stroke-width: 16;
+}
+
+.network-current {
+  position: absolute;
+  top: 51%;
+  left: 52%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(8, 120, 232, 0.24);
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px rgba(8, 120, 232, 0.06);
+  transform: translate(-50%, -50%);
+}
+
+.network-current::before {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(207, 231, 255, 0.22);
+  border: 1px solid rgba(8, 120, 232, 0.36);
+  border-radius: 50%;
+  content: "";
+  animation: network-location-pulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.network-current::after {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(207, 231, 255, 0.3);
+  border: 1px solid rgba(8, 120, 232, 0.26);
+  border-radius: 50%;
+  content: "";
+  animation: network-location-pulse 2.5s 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.network-current i {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--blue);
+  border: 4px solid white;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(8, 120, 232, 0.32);
+}
+
+.network-pin {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: var(--blue);
+  border: 4px solid white;
+  border-radius: 50% 50% 50% 0;
+  box-shadow: 0 12px 26px rgba(8, 89, 175, 0.25);
+  filter: drop-shadow(0 15px 15px rgba(0, 102, 255, 0.16)) drop-shadow(0 4px 6px rgba(0, 102, 255, 0.1));
+  animation: network-pin-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.network-pin img {
+  width: 20px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  transform: rotate(45deg);
+}
+
+.network-pin.pin-1 { top: 14%; left: 17%; }
+.network-pin.pin-2 { top: 16%; right: 12%; animation-delay: 1s; }
+.network-pin.pin-3 { right: 16%; bottom: 25%; animation-delay: 0.5s; }
+.network-pin.pin-4 { bottom: 15%; left: 52%; animation-delay: 2s; }
+
+@keyframes network-location-pulse {
+  0% {
+    opacity: 0.78;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(3.5);
+  }
+}
+
+@keyframes network-pin-float {
+  0%, 100% { transform: translateY(0) rotate(-45deg); }
+  50% { transform: translateY(-11px) rotate(-43deg); }
+}
+
+.network-card {
+  position: absolute;
+  bottom: 24px;
+  left: 18px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  width: 245px;
+  padding: 18px 20px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(6, 11, 18, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 20px 46px rgba(6, 11, 18, 0.12);
+}
+
+.network-card span {
+  color: var(--blue);
+  font-size: 0.53rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.network-card strong {
+  margin-top: 6px;
+  font-size: 1.05rem;
+}
+
+.network-card small {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.56rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-pin {
+    animation: none;
+    transform: rotate(-45deg);
+  }
+
+  .network-current::before,
+  .network-current::after {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 820px) {
+  .network-grid {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+
+  .network-copy {
+    max-width: 600px;
+  }
+
+  .network-map {
+    height: 470px;
+  }
+}
+
+@media (max-width: 560px) {
+  .network-copy h2 {
+    font-size: clamp(2.35rem, 12vw, 4rem);
+  }
+
+  .network-map {
+    height: 420px;
+    border-radius: 22px;
+  }
+
+  .network-current {
+    width: 70px;
+    height: 70px;
+  }
+
+  .network-pin {
+    width: 40px;
+    height: 40px;
+  }
+
+  .network-card {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    width: auto;
+  }
+
+  .network-pin.pin-2 { right: 8%; }
+  .network-pin.pin-3 { right: 10%; bottom: 34%; }
+  .network-pin.pin-4 { bottom: 29%; left: 45%; }
+}

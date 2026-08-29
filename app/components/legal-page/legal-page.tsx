@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { SiteFooter } from "./SiteFooter";
-import { SiteHeader } from "./SiteHeader";
+import { SiteFooter } from "../layout/site-footer/site-footer";
+import { SiteHeader } from "../layout/site-header/site-header";
+import "./legal-page.css";
 
 type LegalPageProps = {
   children: ReactNode;

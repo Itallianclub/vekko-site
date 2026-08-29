@@ -25,12 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
       ? "http"
       : "https";
   const metadataBase = new URL(`${protocol}://${safeHost || "localhost:5173"}`);
-  const socialImage = new URL("/og.png", metadataBase).toString();
+  const socialImage = new URL("/golf.png", metadataBase).toString();
 
   return {
     metadataBase,
     title: {
-      default: "VEKKO — Cuidar do seu carro ficou mais simples",
+      default: "VEKKO — Lave seu carro sem pagar por cada lavagem",
       template: "%s | VEKKO",
     },
     description:
@@ -42,10 +42,10 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       description:
         "Planos por veículo, rede credenciada e utilização segura pelo aplicativo VEKKO.",
-      images: [{ alt: "VEKKO — Cuidar do seu carro ficou mais simples", url: socialImage }],
+      images: [{ alt: "VEKKO — Lave seu carro sem pagar por cada lavagem", url: socialImage }],
       locale: "pt_BR",
       siteName: "VEKKO",
-      title: "VEKKO — Cuidar do seu carro ficou mais simples",
+      title: "VEKKO — Lave seu carro sem pagar por cada lavagem",
       type: "website",
       url: metadataBase,
     },
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description:
         "Planos por veículo, rede credenciada e utilização segura pelo aplicativo VEKKO.",
       images: [socialImage],
-      title: "VEKKO — Cuidar do seu carro ficou mais simples",
+      title: "VEKKO — Lave seu carro sem pagar por cada lavagem",
     },
   };
 }
