@@ -48,10 +48,10 @@ export const benefitNetworkNodes = [
 ] as const;
 
 export const plans = [
-  { name: "Basic", price: "79,90", washes: "2 lavagens por ciclo", description: "Para manter o cuidado em dia sem complicar a rotina.", eligibility: "Hatch e Sedan", accent: false },
-  { name: "Essential", price: "119,90", washes: "4 lavagens por ciclo", description: "A frequência certa para quem usa o carro todos os dias.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: true },
-  { name: "Premium", price: "179,90", washes: "8 lavagens por ciclo", description: "Mais cuidado para quem quer o carro sempre pronto.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false },
-  { name: "Ilimitado", price: "379,90", washes: "Até 1 lavagem por dia", description: "Para uma rotina intensa, sem saldo mensal de lavagens.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false },
+  { name: "Basic", price: "79,90", washes: "2 lavagens por ciclo", description: "Para manter o cuidado em dia sem complicar a rotina.", eligibility: "Hatch e Sedan", accent: false, icon: "bi-droplet", tone: "basic" },
+  { name: "Essential", price: "119,90", washes: "4 lavagens por ciclo", description: "A frequência certa para quem usa o carro todos os dias.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: true, icon: "bi-car-front-fill", tone: "essential" },
+  { name: "Premium", price: "179,90", washes: "8 lavagens por ciclo", description: "Mais cuidado para quem quer o carro sempre pronto.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false, icon: "bi-stars", tone: "premium" },
+  { name: "Ilimitado", price: "379,90", washes: "Até 1 lavagem por dia", description: "Para uma rotina intensa, sem saldo mensal de lavagens.", eligibility: "Hatch, Sedan, SUV e Pickup", accent: false, icon: "bi-infinity", tone: "unlimited" },
 ] as const;
 
 export const questions = [

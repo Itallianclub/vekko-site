@@ -10,14 +10,43 @@ export function Plans() {
         </div>
         <div className="plans-grid" data-reveal>
           {plans.map((plan) => (
-            <article className={`plan-card${plan.accent ? " plan-featured" : ""}`} key={plan.name}>
-              {plan.accent ? <span className="plan-tag">Mais escolhido</span> : <span className="plan-index">VEKKO</span>}
-              <div className="plan-name">{plan.name}</div>
-              <div className="plan-price"><sup>R$</sup><strong>{plan.price}</strong><span>/mês</span></div>
-              <p>{plan.description}</p><div className="plan-divider" />
-              <ul><li><i className="bi bi-check2" aria-hidden="true" />{plan.washes}</li><li><i className="bi bi-check2" aria-hidden="true" />Rede credenciada</li><li><i className="bi bi-check2" aria-hidden="true" />Autorização pelo app</li></ul>
-              <div className="plan-eligibility"><span>Veículos elegíveis</span><strong>{plan.eligibility}</strong></div>
-              <a className="button button-plan" href="#aplicativo">Quero esse plano <i className="bi bi-arrow-right" /></a>
+            <article
+              className={`plan-card plan-card-${plan.tone}${plan.accent ? " plan-featured" : ""}`}
+              key={plan.name}
+            >
+              <div className="plan-card-top">
+                {plan.accent ? (
+                  <span className="plan-tag">Mais escolhido</span>
+                ) : (
+                  <span className="plan-index">VEKKO</span>
+                )}
+                <span className="plan-icon" aria-hidden="true">
+                  <i className={`bi ${plan.icon}`} />
+                </span>
+                <div className="plan-name">{plan.name}</div>
+                <div className="plan-price">
+                  <sup>R$</sup>
+                  <strong>{plan.price}</strong>
+                  <span>/mês</span>
+                </div>
+              </div>
+
+              <div className="plan-card-body">
+                <p>{plan.description}</p>
+                <div className="plan-divider" />
+                <ul>
+                  <li><i className="bi bi-check2" aria-hidden="true" />{plan.washes}</li>
+                  <li><i className="bi bi-check2" aria-hidden="true" />Rede credenciada</li>
+                  <li><i className="bi bi-check2" aria-hidden="true" />Autorização pelo app</li>
+                </ul>
+                <div className="plan-eligibility">
+                  <span>Veículos elegíveis</span>
+                  <strong>{plan.eligibility}</strong>
+                </div>
+                <a className="button button-plan" href="#aplicativo">
+                  Quero esse plano <i className="bi bi-arrow-right" aria-hidden="true" />
+                </a>
+              </div>
             </article>
           ))}
         </div>
