@@ -120,3 +120,201 @@ img { display: block; max-width: 100%; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
 }
+
+/* Shared VEKKO 404 experience */
+.vekko-404 {
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 38%, #eef6ff 0%, #ffffff 44%, #f8fbff 100%);
+  color: #0a1224;
+  padding: 24px 32px;
+}
+
+.vekko-404__header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+
+.vekko-404__brand img {
+  display: block;
+  width: 185px;
+  height: auto;
+}
+
+.vekko-404__top-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid #cbd7e6;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 6px 18px rgba(24, 52, 95, 0.06);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.vekko-404__content {
+  position: relative;
+  display: flex;
+  min-height: calc(100vh - 92px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 1100px);
+  margin: 0 auto;
+  padding: 26px 0 40px;
+  text-align: center;
+}
+
+.vekko-404__code {
+  position: absolute;
+  top: 4%;
+  pointer-events: none;
+  user-select: none;
+  color: rgba(220, 236, 255, 0.78);
+  font-size: clamp(13rem, 38vw, 36rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.1em;
+}
+
+.vekko-404__visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 310px;
+  height: 280px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.vekko-404__shadow {
+  position: absolute;
+  bottom: 20px;
+  width: 88%;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(169, 207, 255, 0.35);
+  filter: blur(18px);
+}
+
+.vekko-404__bucket {
+  position: relative;
+  display: flex;
+  width: 208px;
+  height: 192px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  background: linear-gradient(145deg, #0a79ff 0%, #0066ff 55%, #004bd8 100%);
+  box-shadow: 0 28px 60px rgba(0, 102, 255, 0.28);
+}
+
+.vekko-404__symbol-shell {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 112px;
+  height: 112px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.vekko-404__symbol-shell img {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.vekko-404__bubble {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 3px 8px rgba(55, 100, 160, 0.08);
+}
+.vekko-404__bubble--one { left: -16px; top: 42px; width: 32px; height: 32px; }
+.vekko-404__bubble--two { left: 34px; top: -20px; width: 48px; height: 48px; }
+.vekko-404__bubble--three { right: 20px; top: -28px; width: 64px; height: 64px; }
+
+.vekko-404__copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin-top: -2px;
+}
+
+.vekko-404__copy h1 {
+  margin: 0;
+  font-size: clamp(2.3rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.vekko-404__copy p {
+  max-width: 570px;
+  margin: 16px auto 0;
+  color: #6f7f96;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.vekko-404__button {
+  display: inline-flex;
+  min-width: 250px;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #063cff 0%, #0066ff 52%, #08b7f6 100%);
+  box-shadow: 0 16px 30px rgba(0, 102, 255, 0.22);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.vekko-404__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 19px 36px rgba(0, 102, 255, 0.28);
+}
+
+.vekko-404__copy small {
+  display: block;
+  margin-top: 30px;
+  color: #8a97aa;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.34em;
+}
+
+@media (max-width: 640px) {
+  .vekko-404 { padding: 20px; }
+  .vekko-404__brand img { width: 150px; }
+  .vekko-404__top-link { display: none; }
+  .vekko-404__content { min-height: calc(100vh - 72px); padding-top: 10px; }
+  .vekko-404__code { top: 8%; font-size: clamp(11rem, 54vw, 16rem); }
+  .vekko-404__visual { width: 260px; height: 230px; margin-top: 55px; }
+  .vekko-404__bucket { width: 176px; height: 160px; border-radius: 34px; }
+  .vekko-404__symbol-shell { width: 96px; height: 96px; border-radius: 24px; }
+  .vekko-404__symbol-shell img { width: 72px; height: 72px; }
+  .vekko-404__copy h1 { font-size: 2.15rem; }
+  .vekko-404__copy p { font-size: 15px; line-height: 1.5; }
+  .vekko-404__button { width: 100%; min-width: 0; }
+  .vekko-404__copy small { font-size: 10px; letter-spacing: 0.28em; }
+}
