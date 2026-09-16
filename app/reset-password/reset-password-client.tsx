@@ -1,14 +1,10 @@
 "use client";
 
-import { FirebaseError } from "firebase/app";
-import {
-  confirmPasswordReset,
-  verifyPasswordResetCode,
-} from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import { firebaseAuth } from "./firebase-client";
+
+const API_BASE_URL = "https://api.usevekko.com/api/v1";
 
 type ResetState =
   | "checking"
@@ -17,40 +13,43 @@ type ResetState =
   | "success"
   | "invalid";
 
-function maskEmail(email: string): string {
-  const [local, domain] = email.split("@");
-  if (!local || !domain) return email;
-  const visible = local.slice(0, Math.min(2, local.length));
-  return `${visible}${"•".repeat(Math.max(3, local.length - visible.length))}@${domain}`;
+type ApiError = {
+  code?: string;
+  message?: string;
+};
+
+async function postJson(path: string, body: object): Promise<Response> {
+  return fetch(`${API_BASE_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
 }
 
-function getFirebaseMessage(error: unknown): string {
-  if (!(error instanceof FirebaseError)) {
-    return "Não foi possível redefinir sua senha agora. Tente novamente.";
+function errorMessageFor(status: number, body?: ApiError): string {
+  if (body?.code === "PASSWORD_RESET_TOKEN_INVALID_OR_EXPIRED") {
+    return "Este link é inválido, expirou ou já foi utilizado. Solicite um novo link pelo aplicativo VEKKO.";
   }
-  const messages: Record<string, string> = {
-    "auth/expired-action-code":
-      "Este link expirou. Solicite uma nova redefinição de senha pelo aplicativo VEKKO.",
-    "auth/invalid-action-code":
-      "Este link é inválido ou já foi utilizado. Solicite uma nova redefinição.",
-    "auth/network-request-failed":
-      "Não foi possível conectar ao Firebase. Verifique sua internet e tente novamente.",
-    "auth/too-many-requests":
-      "Muitas tentativas foram feitas. Aguarde alguns minutos e tente novamente.",
-    "auth/weak-password":
-      "A nova senha não atende aos requisitos mínimos de segurança.",
-  };
-
+  if (status === 429) {
+    return "Muitas tentativas foram feitas. Aguarde alguns minutos e tente novamente.";
+  }
   return (
-    messages[error.code] ??
-    "Não foi possível redefinir sua senha agora. Solicite um novo link e tente novamente."
+    body?.message ??
+    "Não foi possível redefinir sua senha agora. Tente novamente em alguns instantes."
   );
+}
+
+async function readApiError(response: Response): Promise<ApiError | undefined> {
+  try {
+    return (await response.json()) as ApiError;
+  } catch {
+    return undefined;
+  }
 }
 
 export function ResetPasswordClient() {
   const [state, setState] = useState<ResetState>("checking");
-  const [oobCode, setOobCode] = useState("");
-  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -60,14 +59,10 @@ export function ResetPasswordClient() {
     let active = true;
 
     async function validateResetLink() {
-      const params = new URLSearchParams(window.location.search);
-      const mode = params.get("mode");
-      const code = params.get("oobCode")?.trim() ?? "";
-
-      await Promise.resolve();
-      if (!active) return;
-
-      if (mode !== "resetPassword" || !code) {
+      const fragment = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const candidate = fragment.get("token")?.trim() ?? "";
+      if (!candidate) {
+        if (!active) return;
         setErrorMessage(
           "O link de redefinição está incompleto ou é inválido. Solicite um novo link pelo aplicativo VEKKO.",
         );
@@ -75,15 +70,22 @@ export function ResetPasswordClient() {
         return;
       }
 
-      setOobCode(code);
       try {
-        const resolvedEmail = await verifyPasswordResetCode(firebaseAuth, code);
+        const response = await postJson("/auth/password-reset/validate", {
+          token: candidate,
+        });
         if (!active) return;
-        setEmail(resolvedEmail);
+        if (!response.ok) {
+          const body = await readApiError(response);
+          setErrorMessage(errorMessageFor(response.status, body));
+          setState("invalid");
+          return;
+        }
+        setToken(candidate);
         setState("ready");
-      } catch (error) {
+      } catch {
         if (!active) return;
-        setErrorMessage(getFirebaseMessage(error));
+        setErrorMessage("Não foi possível validar o link agora. Verifique sua internet e tente novamente.");
         setState("invalid");
       }
     }
@@ -97,34 +99,44 @@ export function ResetPasswordClient() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorMessage("");
-    if (password.length < 6) {
-      setErrorMessage("Use uma senha com pelo menos 6 caracteres.");
+
+    if (password.length < 8) {
+      setErrorMessage("Use uma senha com pelo menos 8 caracteres.");
       return;
     }
-
     if (password !== confirmation) {
       setErrorMessage("As senhas não coincidem.");
       return;
     }
 
     setState("submitting");
-
     try {
-      await confirmPasswordReset(firebaseAuth, oobCode, password);
-      setState("success");
+      const response = await postJson("/auth/password-reset/confirm", {
+        token,
+        password,
+      });
+      if (!response.ok) {
+        const body = await readApiError(response);
+        const message = errorMessageFor(response.status, body);
+        setErrorMessage(message);
+        setState(
+          body?.code === "PASSWORD_RESET_TOKEN_INVALID_OR_EXPIRED"
+            ? "invalid"
+            : "ready",
+        );
+        return;
+      }
+
+      window.history.replaceState(null, "", window.location.pathname);
       setPassword("");
       setConfirmation("");
-    } catch (error) {
-      setErrorMessage(getFirebaseMessage(error));
-      if (
-        error instanceof FirebaseError &&
-        (error.code === "auth/expired-action-code" ||
-          error.code === "auth/invalid-action-code")
-      ) {
-        setState("invalid");
-      } else {
-        setState("ready");
-      }
+      setToken("");
+      setState("success");
+    } catch {
+      setErrorMessage(
+        "Não foi possível conectar à VEKKO. Verifique sua internet e tente novamente.",
+      );
+      setState("ready");
     }
   }
 
@@ -192,10 +204,7 @@ export function ResetPasswordClient() {
             <div className="reset-page__content">
               <span className="reset-page__eyebrow">REDEFINIÇÃO DE SENHA</span>
               <h1>Crie uma nova senha.</h1>
-              <p>
-                Defina uma nova senha para sua conta VEKKO
-                {email ? <> vinculada a <strong>{maskEmail(email)}</strong>.</> : "."}
-              </p>
+              <p>Defina uma nova senha para sua conta VEKKO.</p>
 
               <form className="reset-page__form" onSubmit={handleSubmit} noValidate>
                 <label htmlFor="new-password">Nova senha</label>
@@ -205,11 +214,11 @@ export function ResetPasswordClient() {
                     name="new-password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
-                    minLength={6}
+                    minLength={8}
                     disabled={isBusy}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    placeholder="Mínimo de 6 caracteres"
+                    placeholder="Mínimo de 8 caracteres"
                     required
                   />
                   <button
@@ -229,7 +238,7 @@ export function ResetPasswordClient() {
                     name="confirm-password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
-                    minLength={6}
+                    minLength={8}
                     disabled={isBusy}
                     value={confirmation}
                     onChange={(event) => setConfirmation(event.target.value)}
@@ -251,7 +260,10 @@ export function ResetPasswordClient() {
                   disabled={isBusy || !password || !confirmation}
                 >
                   {state === "submitting" ? (
-                    <><span className="reset-page__spinner reset-page__spinner--button" /> Atualizando...</>
+                    <>
+                      <span className="reset-page__spinner reset-page__spinner--button" />
+                      Atualizando...
+                    </>
                   ) : (
                     <>Redefinir senha <span aria-hidden="true">→</span></>
                   )}
@@ -260,7 +272,7 @@ export function ResetPasswordClient() {
 
               <div className="reset-page__security-note">
                 <span aria-hidden="true">✓</span>
-                <p>Seu link é validado diretamente pelo Firebase. A VEKKO não recebe sua senha.</p>
+                <p>O link é temporário, de uso único e a alteração é concluída em conexão segura com a VEKKO.</p>
               </div>
             </div>
           ) : null}
