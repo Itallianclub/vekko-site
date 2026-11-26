@@ -50,37 +50,111 @@ async function render(pathname = "/") {
   });
 }
 
-test("server-renders the VEKKO institutional home", async () => {
+const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148";
+const ANDROID = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36";
+
+async function renderAs(userAgent, pathname = "/") {
+  const response = await fetch(`${origin}${pathname}`, {
+    headers: { accept: "text/html", "user-agent": userAgent },
+  });
+  return response.text();
+}
+
+const visibleText = (html) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+test("server-renders the VEKKO download landing page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Lave seu carro/);
-  assert.match(html, /sem pagar por cada lavagem/);
-  assert.match(html, /benefits-deck/);
-  assert.match(html, /portal-button/);
-  assert.match(html, /bi-arrow-up/);
-  assert.match(html, /vekko-logo-navbar\.png/);
-  assert.match(html, /vekko-symbol\.png/);
-  assert.match(html, /golf\.png/);
-  assert.match(html, /Planos VEKKO/);
-  assert.match(html, /79,90/);
-  assert.match(html, /379,90/);
-  assert.match(html, /Uberlândia\/MG/);
-  assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+  const head = html.slice(0, html.indexOf("</head>"));
+  const text = visibleText(html);
+
+  // SEO e Smart App Banner no <head>
+  assert.match(head, /<title>VEKKO \| Lavagem de carro por assinatura<\/title>/);
+  assert.match(head, /Assine um plano e lave seu carro nos parceiros VEKKO perto de você\. Baixe o app na App Store ou no Google Play\./);
+  assert.match(head, /<meta name="apple-itunes-app" content="app-id=6833514367"/);
+
+  // Estrutura e acessibilidade
+  assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1);
+  assert.match(html, /<main[^>]*id="conteudo"/);
+  assert.match(html, /Pular para o conteúdo/);
+  for (const id of ["como-funciona", "planos", "duvidas", "baixar"]) assert.match(html, new RegExp(`id="${id}"`));
+
+  // Header: 3 links + portal, sem menu mobile duplicado
+  for (const label of ["Como funciona", "Planos", "Seja parceiro", "Acessar portal"]) assert.match(text, new RegExp(label));
+  assert.doesNotMatch(html, /mobile-menu/);
+
+  // Copy aprovada
+  assert.match(text, /Seu carro limpo o mês inteiro\. Sem lavar, sem pensar\./);
+  assert.match(text, /Ver planos/);
+  assert.match(text, /Você já adiou essa lavagem umas três vezes\./);
+  assert.match(text, /Da assinatura ao carro limpo em quatro passos\./);
+  for (const step of ["Cadastre seu carro.", "Escolha seu plano.", "Ache um parceiro perto.", "Mostre o QR Code e lave."]) {
+    assert.ok(text.includes(step), step);
+  }
+  assert.match(text, /Quantas lavagens você usa por mês\?/);
+  for (const price of ["R$ 99,90", "R$ 179,90", "R$ 349,90"]) assert.ok(text.includes(price), price);
+  assert.match(text, /Mais escolhido/);
+  assert.equal((text.match(/Quero esse plano/g) ?? []).length, 3);
+  assert.equal((html.match(/<details class="faq-item"/g) ?? []).length, 4);
+  assert.match(text, /Receba clientes recorrentes com a VEKKO\./);
+  assert.match(text, /Seu próximo carro limpo está a um download de distância\./);
+  assert.match(text, /Grátis para baixar\./);
+  // Barra fixa de download + linhas da História
+  assert.match(html, /class="download-bar/);
+  assert.match(text, /Baixe o app VEKKO/);
+  assert.equal((html.match(/class="story-line"/g) ?? []).length, 3);
+
+  // Computador: as duas lojas + QR code
+  assert.match(text, /Baixar na App Store/);
+  assert.match(text, /Baixar no Google Play/);
+  assert.match(text, /Aponte a câmera do celular e baixe em segundos/);
+
+  // O que saiu do site
+  assert.doesNotMatch(text, /Ilimitado|Uberlândia|Piloto|Acompanhar lançamento|Em breve/i);
+  assert.doesNotMatch(html, /benefits-deck|bootstrap-icons/);
+  assert.doesNotMatch(html, /mascot|mascote|swaay|codex-preview|react-loading-skeleton/i);
 });
 
-test("renders partner and legal routes", async () => {
-  const [partner, privacy, terms] = await Promise.all([
+test("shows only the device's store on phones", async () => {
+  const [iphone, android] = await Promise.all([renderAs(IPHONE), renderAs(ANDROID)]);
+  const iphoneText = visibleText(iphone);
+  const androidText = visibleText(android);
+
+  assert.match(iphoneText, /Baixar na App Store/);
+  assert.doesNotMatch(iphoneText, /Baixar no Google Play|Aponte a câmera/);
+  assert.match(iphone, /href="https:\/\/apps\.apple\.com\/[^"]+"[^>]*>Quero esse plano/);
+
+  assert.match(androidText, /Baixar no Google Play/);
+  assert.doesNotMatch(androidText, /Baixar na App Store|Aponte a câmera/);
+  assert.match(android, /href="https:\/\/play\.google\.com\/[^"]+"[^>]*>Quero esse plano/);
+});
+
+test("redirects the QR code route to the right store", async () => {
+  const go = (userAgent) => fetch(`${origin}/baixar`, { headers: { "user-agent": userAgent }, redirect: "manual" });
+  const [iphone, android, desktop] = await Promise.all([go(IPHONE), go(ANDROID), go("Mozilla/5.0 (X11; Linux x86_64)")]);
+  assert.equal(iphone.status, 302);
+  assert.match(iphone.headers.get("location") ?? "", /^https:\/\/apps\.apple\.com\//);
+  assert.match(android.headers.get("location") ?? "", /^https:\/\/play\.google\.com\//);
+  assert.match(desktop.headers.get("location") ?? "", /\/#baixar$/);
+});
+
+test("renders partner, legal and account routes", async () => {
+  const [partner, privacy, terms, reset, deleteAccount] = await Promise.all([
     render("/seja-parceiro"),
     render("/privacidade"),
     render("/termos"),
+    render("/reset-password"),
+    render("/excluir-conta"),
   ]);
 
   assert.equal(partner.status, 200);
   assert.equal(privacy.status, 200);
   assert.equal(terms.status, 200);
+  assert.equal(reset.status, 200);
+  assert.equal(deleteAccount.status, 200);
   assert.match(await partner.text(), /Mais clientes para o seu estabelecimento/);
   assert.match(await privacy.text(), /Política de Privacidade/);
   assert.match(await terms.text(), /Termos de Uso/);
@@ -96,8 +170,8 @@ test("keeps only the dependencies and assets used by the institutional site", as
   ]);
 
   assert.match(page, /HomeExperience/);
+  assert.match(page, /apple-itunes-app/);
   assert.match(layout, /VEKKO/);
-  assert.match(layout, /bootstrap-icons\/font\/bootstrap-icons\.css/);
   assert.match(layout, /vekko-symbol\.png/);
   assert.match(packageJson, /"bootstrap-icons":/);
   assert.match(packageJson, /"gsap": "3\.15\.0"/);

@@ -1,0 +1,11 @@
+.wash-canvas { aspect-ratio: 16 / 9; border-radius: var(--radius-lg); display: block; height: auto; width: 100%; }
+.wash-fallback { border-radius: var(--radius-lg); display: none; height: auto; width: 100%; }
+
+/* Celular (<640px) e movimento reduzido: só a imagem final, sem sequência. */
+@media (max-width: 639px), (prefers-reduced-motion: reduce) {
+  .wash-canvas { display: none; }
+  .wash-fallback { display: block; }
+}
+/* Sem assets (o primeiro frame falhou): o motion.ts marca a seção. */
+.wash.is-fallback .wash-canvas { display: none; }
+.wash.is-fallback .wash-fallback { display: block; }

@@ -1,0 +1,61 @@
+.store-buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.store-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Botões de loja: brancos sobre o fundo escuro; brilho no acento no hover. */
+.button-store { background: var(--white); color: var(--ink); }
+.button-store:hover { background: var(--white); box-shadow: 0 0 24px rgb(255 255 255 / 0.45); }
+.store-icon { flex: none; height: 20px; width: 20px; }
+
+.store-qr {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  max-width: 288px;
+  text-align: left;
+}
+.store-qr-code {
+  border-radius: var(--radius-sm);
+  display: block;
+  flex: none;
+  height: 96px;
+  overflow: hidden;
+  width: 96px;
+}
+.store-qr-code svg { display: block; height: 100%; width: 100%; }
+.store-qr figcaption { color: var(--ink-muted); font-size: var(--text-small); line-height: 1.6; }
+
+/* Celular: um botão só, largura total. */
+@media (max-width: 767px) {
+  .store-buttons, .store-list, .store-list li { width: 100%; }
+  .store-list .button { width: 100%; }
+  .store-qr { display: none; }
+}
+
+/* Variante compacta (barra fixa): não ocupa a largura toda. */
+.store-buttons.is-compact, .store-buttons.is-compact .store-list, .store-buttons.is-compact .store-list li { width: auto; }
+.store-buttons.is-compact { flex: none; }
+.store-buttons.is-compact .store-list { flex-wrap: nowrap; gap: var(--space-1); }
+.store-buttons.is-compact .store-list .button {
+  font-size: var(--text-small);
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  white-space: nowrap;
+  width: auto;
+}
+.store-buttons.is-compact .button.is-icon { padding: 0; width: 44px; }
