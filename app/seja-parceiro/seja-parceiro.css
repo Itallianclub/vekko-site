@@ -1,53 +1,102 @@
-.partner-hero { background-color: #f4f8fc; padding: 92px 0 108px; }
-.partner-hero-grid { align-items: end; display: grid; gap: 70px; grid-template-columns: 1.2fr 0.65fr; }
-.partner-hero h1 { font-size: clamp(3.4rem, 6vw, 6.2rem); }
-.partner-hero h1 em { color: var(--blue); display: block; font-style: normal; }
-.partner-hero-grid > div:last-child > p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin: 0; }
-.partner-benefits { background: white; padding-block: 110px; }
+/*
+ * Seja Parceiro — mesmo sistema da landing:
+ * tokens de cor, títulos 300 / corpo 400, escala de 8, padding de seção simétrico (--section-y),
+ * cards brancos sobre --mist com --shadow-card e raio de 20px (o dos cards de plano).
+ * Ritmo: hero marinho → benefícios --mist → processo --deep → cadastro --mist → portal branco.
+ */
+
+/* ---------- Hero: mesma entrada da landing (marinho, título branco, botão azul) ----------
+   margin-top negativo: sobe por baixo da pílula do header (16px + 58px), como na landing. */
+.partner-hero {
+  background: radial-gradient(120% 90% at 50% 0%, #0a3b80 0%, var(--deep) 45%, #041c45 100%);
+  color: var(--white);
+  margin-top: -74px;
+  padding-block: calc(var(--section-y) + 74px) var(--section-y);
+}
+.partner-hero-grid { align-items: end; display: grid; gap: var(--space-8); grid-template-columns: 1.2fr 0.65fr; }
+.partner-hero h1 { color: var(--white); font-size: clamp(3.4rem, 6vw, 6.2rem); }
+.partner-hero-line { display: block; }
+.partner-hero-grid > div:last-child > p { color: rgb(255 255 255 / 0.72); font-size: var(--text-body); line-height: 1.6; margin: 0; }
+.partner-hero .text-link { color: var(--white); }
+/* Botões numa linha só, como na landing (na coluna estreita do hero o texto quebrava). */
+.partner-hero .button, .partner-copy .button, .portal-copy .button { white-space: nowrap; }
+.partner-hero :focus-visible { outline-color: var(--white); }
+
+/* ---------- Benefícios: cards brancos sobre --mist ---------- */
+.partner-benefits { background: var(--mist); padding-block: var(--section-y); }
 .section-heading.compact { grid-template-columns: minmax(0, 1fr); }
 .section-heading.compact h2 { max-width: 760px; }
-.partner-benefits-grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
-.partner-info-card { background: #f3f6f9; border: 1px solid var(--line); border-radius: 22px; min-height: 280px; padding: 27px; }
-.partner-info-card > span { color: var(--blue); font-family: var(--font-geist-mono), monospace; font-size: 0.65rem; }
-.partner-info-card h3 { font-size: 1.55rem; letter-spacing: -0.05em; margin: 80px 0 12px; }
-.partner-info-card p { color: var(--muted); font-size: 0.72rem; line-height: 1.65; margin: 0; }
-.partner-process { background: var(--ink); color: white; padding-block: 110px; }
-.partner-process .section-heading > p { color: #a6afba; }
+.partner-benefits-grid { display: grid; gap: var(--space-3); grid-template-columns: repeat(3, 1fr); }
+.partner-info-card {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  min-height: 280px;
+  padding: var(--space-4);
+}
+/* Número no estilo de "Como funciona" da landing: grande, leve e claro. */
+.partner-info-card > span {
+  color: rgb(11 26 46 / 0.48);
+  display: block;
+  font-size: clamp(3.5rem, 5vw, 5rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.partner-info-card h3 { color: var(--ink); font-size: 1.75rem; font-weight: 300; letter-spacing: -0.02em; line-height: 1.2; margin: var(--space-6) 0 var(--space-2); }
+.partner-info-card p { color: var(--ink-muted); font-size: var(--text-body); line-height: 1.6; margin: 0; }
+
+/* ---------- Processo: --deep ---------- */
+.partner-process { background: var(--deep); color: var(--white); padding-block: var(--section-y); }
+.partner-process .section-heading h2 { color: var(--white); }
+.partner-process .section-heading > p { color: var(--on-deep-muted); }
 .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
-.step-card { border-left: 1px solid rgba(255, 255, 255, 0.13); min-height: 230px; padding: 24px; }
-.step-card > span { color: #55acff; font-family: var(--font-geist-mono), monospace; font-size: 0.66rem; }
-.step-card > div { margin-top: 82px; }
-.step-card h3 { font-size: 1rem; margin: 0 0 10px; }
-.step-card p { color: #a7b0bc; font-size: 0.68rem; line-height: 1.6; margin: 0; }
-.partner-signup { background: #edf2f7; padding-block: 110px; }
-.partner-signup-grid { align-items: center; display: grid; gap: 90px; grid-template-columns: 1fr 0.9fr; }
-.partner-copy h2, .portal-copy h2 { font-size: clamp(2.7rem, 4.5vw, 4.7rem); }
-.partner-copy > p, .portal-copy > p { color: var(--muted); font-size: 0.8rem; line-height: 1.7; margin: 21px 0 28px; }
-.partner-checklist { background: white; border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 20px 55px rgba(6, 11, 18, 0.08); list-style: none; margin: 0; padding: 20px 26px; }
-.partner-checklist li { align-items: center; border-bottom: 1px solid var(--line); display: flex; font-size: 0.7rem; gap: 12px; min-height: 58px; }
+.step-card { border-left: 1px solid rgb(255 255 255 / 0.13); min-height: 232px; padding: var(--space-3); }
+.step-card > span {
+  color: rgb(255 255 255 / 0.4);
+  display: block;
+  font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.step-card > div { margin-top: var(--space-6); }
+.step-card h3 { color: var(--white); font-size: 1.25rem; font-weight: 300; line-height: 1.3; margin: 0 0 var(--space-1); }
+.step-card p { color: var(--on-deep-muted); font-size: var(--text-small); line-height: 1.6; margin: 0; }
+.partner-process :focus-visible { outline-color: var(--white); }
+
+/* ---------- Cadastro: --mist, lista em card branco ---------- */
+.partner-signup { background: var(--mist); padding-block: var(--section-y); }
+.partner-signup-grid { align-items: center; display: grid; gap: var(--space-12); grid-template-columns: 1fr 0.9fr; }
+.partner-copy h2, .portal-copy h2 { color: var(--ink); font-size: clamp(2.75rem, 4.5vw, 4.75rem); }
+.partner-copy > p, .portal-copy > p { color: var(--ink-muted); font-size: var(--text-body); line-height: 1.6; margin: var(--space-3) 0 var(--space-4); }
+.partner-checklist {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+}
+.partner-checklist li { align-items: center; border-bottom: 1px solid var(--line); color: var(--ink); display: flex; font-size: var(--text-body); gap: var(--space-2); min-height: 56px; }
 .partner-checklist li:last-child { border-bottom: 0; }
 .partner-checklist .bi { color: var(--blue); }
-.portal-section { background: white; padding-block: 110px; }
-.portal-grid { align-items: center; display: grid; gap: 90px; grid-template-columns: 0.75fr 1fr; }
-.portal-badge { align-items: center; aspect-ratio: 1; background: var(--ink); border-radius: 50%; color: white; display: flex; flex-direction: column; gap: 24px; justify-content: center; max-width: 390px; position: relative; }
-.portal-badge::after { border: 1px solid rgba(84, 172, 255, 0.4); border-radius: 50%; content: ""; inset: 24px; position: absolute; }
-.portal-badge strong { color: #6bb7ff; font-family: var(--font-geist-mono), monospace; font-size: 0.64rem; letter-spacing: 0.1em; }
-.portal-badge .bi { font-size: 3rem; }
+
+/* ---------- Portal: branco, só título, texto e botão ---------- */
+.portal-section { background: var(--white); padding-block: var(--section-y); }
+.portal-copy { max-width: var(--measure); }
 
 @media (max-width: 820px) {
-  .partner-hero-grid, .partner-signup-grid, .portal-grid { grid-template-columns: 1fr; }
+  .partner-hero-grid, .partner-signup-grid { grid-template-columns: minmax(0, 1fr); }
   .partner-benefits-grid { grid-template-columns: 1fr; }
-  .partner-info-card { min-height: 230px; }
-  .partner-info-card h3 { margin-top: 48px; }
+  .partner-info-card { min-height: 0; }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 560px) {
-  .partner-hero { padding: 74px 0 82px; }
-  .partner-hero h1 { font-size: clamp(3rem, 13vw, 4.5rem); }
+  .partner-hero h1 { font-size: clamp(2.25rem, 10.2vw, 3.25rem); }
   .steps-grid { grid-template-columns: 1fr; }
-  .step-card { min-height: 180px; }
-  .step-card > div { margin-top: 42px; }
-  .partner-checklist { padding: 12px 18px; }
-  .portal-badge { max-width: 310px; }
+  .step-card { min-height: 0; }
+  .step-card > div { margin-top: var(--space-3); }
+  .partner-checklist { padding: var(--space-2) var(--space-3); }
 }

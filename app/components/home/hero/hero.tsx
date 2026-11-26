@@ -1,46 +1,37 @@
-import Image from "next/image";
+import { ArrowDown } from "lucide-react";
+import { ButtonWithIcon } from "@/components/ui/button-with-icon";
 import "./hero.css";
 
+/** Hero de tela cheia: só tipografia sobre o campo marinho. Sem imagem, mock ou print. */
 export function Hero() {
   return (
-    <section className="hero grid-surface" id="hero">
-      <div className="site-shell hero-shell">
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <div className="eyebrow-pill" data-hero-reveal><span className="status-dot" />Piloto inicial · Uberlândia</div>
-            <h1 data-hero-reveal>Lave seu carro <em>sem pagar por cada lavagem.</em></h1>
-            <p className="hero-lead" data-hero-reveal>Assine um plano para o seu veículo, lave em parceiros credenciados e controle tudo pelo aplicativo VEKKO.</p>
-            <div className="hero-actions" data-hero-reveal>
-              <a className="button button-primary" href="#planos">Conhecer planos <i className="bi bi-arrow-down" aria-hidden="true" /></a>
-              <a className="text-link" href="#como-funciona">Como funciona <i className="bi bi-arrow-up-right" aria-hidden="true" /></a>
-            </div>
-            <div className="hero-proof" data-hero-reveal><span>Planos por veículo</span><span>Parceiros credenciados</span><span>Tudo pelo app</span></div>
-          </div>
-
-          <div className="hero-visual" data-hero-reveal>
-            <div className="route-orbit" aria-hidden="true"><i /><i /><i /></div>
-            <Image
-              className="hero-phone"
-              src="/mockup-trimmed.png"
-              alt="Aplicativo VEKKO exibindo parceiros próximos"
-              width={735}
-              height={1402}
-              sizes="(max-width: 560px) 200px, (max-width: 820px) 220px, 240px"
-              priority
-            />
-            <Image
-              className="hero-car"
-              src="/golf.png"
-              alt="Automóvel representando os veículos atendidos pela VEKKO"
-              width={813}
-              height={363}
-              sizes="(max-width: 820px) 100vw, 720px"
-              priority
-            />
-            <div className="floating-plan"><span>Plano ativo</span><strong>Vekko Essential</strong><p><b>4</b> lavagens por ciclo</p><small>Próxima renovação · 12 set</small></div>
-            <div className="floating-location" aria-hidden="true"><i className="bi bi-geo-alt-fill" /></div>
+    <section className="hero" aria-labelledby="hero-title" data-nav-sentinel>
+      <div className="hero-glow" aria-hidden="true" />
+      <div className="hero-sheen" aria-hidden="true" />
+      <div className="shell">
+        <div className="hero-copy">
+          <h1 className="hero-title" id="hero-title">
+            Seu carro limpo o mês inteiro. Sem lavar, sem pensar.
+          </h1>
+          <p className="hero-sub">
+            Assine um plano pro seu carro, lave nos parceiros VEKKO e controle tudo pelo app.
+          </p>
+          {/* "Ver planos ↓": a seta da copy é o ícone do círculo. */}
+          <div className="hero-cta">
+            <ButtonWithIcon className="w-full md:w-fit" href="#planos" icon={ArrowDown} rotateIconOnHover={false}>
+              Ver planos
+            </ButtonWithIcon>
           </div>
         </div>
+      </div>
+
+      {/* Transição para a História: do transparente direto para o --mist. */}
+      <div className="hero-fade" aria-hidden="true" />
+
+      {/* Âncora na base: mostra que o hero preenche a tela. Copy nova — aguardando aprovação. */}
+      <div className="hero-anchor">
+        <span className="hero-anchor__pill">Assine. Lave. Repita.</span>
+        <span className="hero-anchor__cue" aria-hidden="true">↓</span>
       </div>
     </section>
   );

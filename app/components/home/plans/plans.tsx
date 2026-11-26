@@ -1,56 +1,38 @@
 import { plans } from "../home-data";
+import { PlanCta } from "./plan-cta";
 import "./plans.css";
 
 export function Plans() {
   return (
-    <section className="section plans-section" id="planos">
-      <div className="site-shell">
-        <div className="section-heading" data-reveal>
-          <div><span className="section-kicker">Planos VEKKO</span><h2>Escolha sua frequência.</h2></div>
-        </div>
-        <div className="plans-grid" data-reveal>
-          {plans.map((plan) => (
-            <article
-              className={`plan-card plan-card-${plan.tone}${plan.accent ? " plan-featured" : ""}`}
-              key={plan.name}
-            >
-              <div className="plan-card-top">
-                {plan.accent ? (
-                  <span className="plan-tag">Mais escolhido</span>
-                ) : (
-                  <span className="plan-index">VEKKO</span>
-                )}
-                <span className="plan-icon" aria-hidden="true">
-                  <i className={`bi ${plan.icon}`} />
-                </span>
-                <div className="plan-name">{plan.name}</div>
-                <div className="plan-price">
-                  <sup>R$</sup>
-                  <strong>{plan.price}</strong>
-                  <span>/mês</span>
-                </div>
-              </div>
+    <section className="section section-tint" id="planos" aria-labelledby="planos-title">
+      <div className="shell">
+        <h2 className="h2 section-title" id="planos-title" data-reveal>
+          Quantas lavagens você usa por mês?
+        </h2>
 
-              <div className="plan-card-body">
-                <p>{plan.description}</p>
-                <div className="plan-divider" />
-                <ul>
-                  <li><i className="bi bi-check2" aria-hidden="true" />{plan.washes}</li>
-                  <li><i className="bi bi-check2" aria-hidden="true" />Rede credenciada</li>
-                  <li><i className="bi bi-check2" aria-hidden="true" />Autorização pelo app</li>
-                </ul>
-                <div className="plan-eligibility">
-                  <span>Veículos elegíveis</span>
-                  <strong>{plan.eligibility}</strong>
+        {/* .plan-card: o GSAP anima a entrada. .plan-card__inner: o CSS cuida do lift e do hover. */}
+        <ul className="plan-list">
+          {plans.map((plan) => (
+            <li className={`plan-card${plan.featured ? " is-featured" : ""}`} key={plan.name}>
+              <div className="plan-card__inner">
+                <div className="plan-head">
+                  <h3 className="plan-name">{plan.name}</h3>
+                  {plan.featured ? <span className="plan-badge">Mais escolhido</span> : null}
                 </div>
-                <a className="button button-plan" href="#aplicativo">
-                  Quero esse plano <i className="bi bi-arrow-right" aria-hidden="true" />
-                </a>
+                <p className="plan-price">
+                  R$ {plan.price}<span>/mês</span>
+                </p>
+                <p className="plan-washes">{plan.washes}</p>
+                <p className="plan-description">{plan.description}</p>
+                <PlanCta featured={plan.featured} plan={plan.name} />
               </div>
-            </article>
+            </li>
           ))}
-        </div>
-        <p className="plans-note" data-reveal>* Benefícios não acumulam. O plano Ilimitado permite no máximo uma lavagem por veículo ao dia.</p>
+        </ul>
+
+        <p className="plans-note measure" data-reveal>
+          Lavagem simples. Use seu saldo quando quiser, sem esperar entre uma e outra. O saldo vale dentro do mês.
+        </p>
       </div>
     </section>
   );

@@ -1,30 +1,42 @@
+import { headers } from "next/headers";
+import { detectPlatform } from "../../lib/platform";
+import { Analytics } from "../analytics/analytics";
 import { SiteFooter } from "../layout/site-footer/site-footer";
 import { SiteHeader } from "../layout/site-header/site-header";
-import { AppCta } from "./app-cta/app-cta";
-import { Benefits } from "./benefits/benefits";
+import { PlatformProvider } from "../store/platform-context";
 import { Faq } from "./faq/faq";
+import { FinalCta } from "./final-cta/final-cta";
 import { Hero } from "./hero/hero";
-import { HomeAnimations } from "./home-animations";
+import { DownloadBar } from "./download-bar/download-bar";
+import { HomeMotion } from "./home-motion";
 import { HowItWorks } from "./how-it-works/how-it-works";
-import { Network } from "./network/network";
-import { PartnerPreview } from "./partner-preview/partner-preview";
+import { PartnerStrip } from "./partner-strip/partner-strip";
 import { Plans } from "./plans/plans";
+import { Story } from "./story/story";
+import { Wash } from "./wash/wash";
 
-export function HomeExperience() {
+export async function HomeExperience() {
+  const userAgent = (await headers()).get("user-agent");
+
   return (
-    <HomeAnimations>
-      <SiteHeader />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <Benefits />
-        <Plans />
-        <Network />
-        <PartnerPreview />
-        <Faq />
-        <AppCta />
-      </main>
-      <SiteFooter />
-    </HomeAnimations>
+    <PlatformProvider initial={detectPlatform(userAgent)}>
+      <div className="home">
+        <SiteHeader overHero />
+        <main id="conteudo" tabIndex={-1}>
+          <Hero />
+          <Story />
+          <Wash />
+          <HowItWorks />
+          <Plans />
+          <Faq />
+          <FinalCta />
+          <PartnerStrip />
+        </main>
+        <SiteFooter />
+        <DownloadBar />
+      </div>
+      <HomeMotion />
+      <Analytics />
+    </PlatformProvider>
   );
 }

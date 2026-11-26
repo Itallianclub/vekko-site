@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { SiteFooter } from "../components/layout/site-footer/site-footer";
 import { SiteHeader } from "../components/layout/site-header/site-header";
 import "./seja-parceiro.css";
@@ -6,7 +7,7 @@ import "./seja-parceiro.css";
 export const metadata: Metadata = {
   title: "Seja um parceiro",
   description:
-    "Faça parte da rede VEKKO em Uberlândia, receba clientes assinantes e valide os atendimentos com segurança.",
+    "Faça parte da rede VEKKO, receba clientes assinantes e valide os atendimentos com segurança.",
 };
 
 const partnerBenefits = [
@@ -53,15 +54,15 @@ const partnerSteps = [
 export default function PartnerPage() {
   return (
     <>
-      <SiteHeader />
-      <main className="page-main">
-        <section className="partner-hero grid-surface">
+      <SiteHeader overHero />
+      <main className="page-main" id="conteudo" tabIndex={-1}>
+        {/* Mesma entrada da landing: hero marinho, nav escura por cima (data-nav-sentinel). */}
+        <section className="partner-hero" data-nav-sentinel>
           <div className="site-shell partner-hero-grid">
             <div>
-              <span className="section-kicker">Rede VEKKO · Uberlândia/MG</span>
               <h1>
                 Mais clientes para o seu estabelecimento.
-                <em>Operação simples e segura.</em>
+                <span className="partner-hero-line">Operação simples e segura.</span>
               </h1>
             </div>
             <div>
@@ -70,7 +71,7 @@ export default function PartnerPage() {
                 os atendimentos pelo portal do parceiro.
               </p>
               <div className="hero-actions">
-                <a className="button button-green" href="#cadastro">
+                <a className="button button-primary" href="#cadastro">
                   Quero ser parceiro <i className="bi bi-arrow-down" aria-hidden="true" />
                 </a>
                 <a className="text-link" href="#portal">
@@ -86,14 +87,13 @@ export default function PartnerPage() {
           <div className="site-shell">
             <div className="section-heading compact">
               <div>
-                <span className="section-kicker">Por que participar</span>
                 <h2>Uma parceria feita para funcionar na rotina real.</h2>
               </div>
             </div>
             <div className="partner-benefits-grid">
               {partnerBenefits.map((benefit) => (
                 <article className="partner-info-card" key={benefit.number}>
-                  <span>{benefit.number}</span>
+                  <span aria-hidden="true">{benefit.number}</span>
                   <h3>{benefit.title}</h3>
                   <p>{benefit.text}</p>
                 </article>
@@ -106,7 +106,6 @@ export default function PartnerPage() {
           <div className="site-shell">
             <div className="section-heading">
               <div>
-                <span className="section-kicker section-kicker-light">Atendimento</span>
                 <h2>Do QR Code à conclusão, tudo fica registrado.</h2>
               </div>
               <p>
@@ -117,7 +116,7 @@ export default function PartnerPage() {
             <div className="steps-grid">
               {partnerSteps.map((step) => (
                 <article className="step-card" key={step.number}>
-                  <span>{step.number}</span>
+                  <span aria-hidden="true">{step.number}</span>
                   <div>
                     <h3>{step.title}</h3>
                     <p>{step.text}</p>
@@ -131,7 +130,6 @@ export default function PartnerPage() {
         <section className="partner-signup" id="cadastro">
           <div className="site-shell partner-signup-grid">
             <div className="partner-copy">
-              <span className="section-kicker">Cadastro do estabelecimento</span>
               <h2>Prepare sua operação para entrar na rede.</h2>
               <p>
                 A VEKKO analisa cada solicitação antes de liberar o acesso. Os
@@ -140,7 +138,7 @@ export default function PartnerPage() {
                 garantido.
               </p>
               <a
-                className="button button-green"
+                className="button button-primary"
                 href="mailto:parceiros@vekko.com.br?subject=Quero%20ser%20parceiro%20VEKKO"
               >
                 Solicitar cadastro
@@ -159,13 +157,8 @@ export default function PartnerPage() {
         </section>
 
         <section className="portal-section" id="portal">
-          <div className="site-shell portal-grid">
-            <div className="portal-badge" aria-hidden="true">
-              <strong>PORTAL DO PARCEIRO</strong>
-              <i className="bi bi-shop-window" />
-            </div>
+          <div className="site-shell">
             <div className="portal-copy">
-              <span className="section-kicker">Já faz parte da rede?</span>
               <h2>Seu acesso é liberado após a aprovação.</h2>
               <p>
                 Parceiros aprovados recebem as orientações de acesso ao portal.
@@ -173,7 +166,7 @@ export default function PartnerPage() {
                 fale com o time VEKKO.
               </p>
               <a
-                className="button button-dark"
+                className="button button-primary"
                 href="mailto:parceiros@vekko.com.br?subject=Ajuda%20com%20o%20portal%20VEKKO"
               >
                 Solicitar ajuda de acesso

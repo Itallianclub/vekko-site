@@ -13,7 +13,7 @@ export function LegalPage({ children, description, title }: LegalPageProps) {
   return (
     <>
       <SiteHeader />
-      <main className="page-main">
+      <main className="page-main" id="conteudo" tabIndex={-1}>
         <section className="legal-hero grid-surface">
           <div className="site-shell">
             <span className="section-kicker">VEKKO · Documento institucional</span>

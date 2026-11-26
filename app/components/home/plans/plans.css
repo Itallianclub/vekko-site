@@ -1,321 +1,91 @@
-.plans-section {
-  background: #f7f9fc;
-}
-
-.plans-grid {
-  align-items: center;
+.plan-list {
   display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(4, 1fr);
-  padding-top: 14px;
-}
-
-.plan-card {
-  --plan-foreground: #fff;
-  --plan-muted: rgba(255, 255, 255, 0.74);
-  --plan-surface: #0878e8;
-  background: #fff;
-  border: 1px solid rgba(13, 54, 99, 0.08);
-  border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(15, 62, 113, 0.09);
-  display: flex;
-  flex-direction: column;
-  min-height: 580px;
-  overflow: hidden;
-  position: relative;
-  transition: box-shadow 240ms ease, transform 240ms ease;
-}
-
-.plan-card:hover {
-  box-shadow: 0 28px 62px rgba(15, 62, 113, 0.15);
-  transform: translateY(-6px);
-}
-
-.plan-card-basic {
-  --plan-foreground: #061a32;
-  --plan-muted: rgba(6, 26, 50, 0.68);
-  --plan-surface: #cde8ff;
-}
-
-.plan-card-essential {
-  --plan-surface: #0878e8;
-}
-
-.plan-card-premium {
-  --plan-surface: #12afdd;
-}
-
-.plan-card-unlimited {
-  --plan-surface: #082c5b;
-}
-
-.plan-featured {
-  box-shadow: 0 28px 66px rgba(8, 120, 232, 0.2);
-  min-height: 610px;
-  transform: translateY(-12px);
-}
-
-.plan-featured:hover {
-  box-shadow: 0 34px 74px rgba(8, 120, 232, 0.27);
-  transform: translateY(-18px);
-}
-
-.plan-card-top {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  min-height: 220px;
-  padding: 24px 20px 20px;
-  position: relative;
-  text-align: center;
-  z-index: 2;
-}
-
-.plan-tag,
-.plan-index {
-  align-items: center;
-  border-radius: 999px;
-  display: inline-flex;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.49rem;
-  font-weight: 700;
-  height: 24px;
-  letter-spacing: 0.08em;
-  padding: 0 10px;
-  position: absolute;
-  right: 17px;
-  text-transform: uppercase;
-  top: 17px;
-}
-
-.plan-tag {
-  background: #eaf5ff;
-  color: var(--blue);
-}
-
-.plan-index {
-  border: 1px solid var(--line);
-  color: var(--muted);
-}
-
-.plan-icon {
-  align-items: center;
-  background: linear-gradient(145deg, #eff7ff, #fff);
-  border: 1px solid rgba(8, 120, 232, 0.12);
-  border-radius: 18px;
-  box-shadow: 0 12px 28px rgba(8, 120, 232, 0.1);
-  color: var(--blue);
-  display: flex;
-  font-size: 1.45rem;
-  height: 56px;
-  justify-content: center;
-  margin-top: 7px;
-  transform: rotate(-3deg);
-  width: 56px;
-}
-
-.plan-card:nth-child(even) .plan-icon {
-  transform: rotate(3deg);
-}
-
-.plan-name {
-  color: var(--ink);
-  font-size: 1rem;
-  font-weight: 670;
-  margin-top: 15px;
-}
-
-.plan-price {
-  align-items: end;
-  color: var(--ink);
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.plan-price sup {
-  align-self: flex-start;
-  font-size: 0.56rem;
-  margin: 7px 3px 0 0;
-}
-
-.plan-price strong {
-  font-size: clamp(2rem, 2.65vw, 2.8rem);
-  letter-spacing: -0.075em;
-  line-height: 1;
-}
-
-.plan-price > span {
-  color: var(--muted);
-  font-size: 0.58rem;
-  margin: 0 0 4px 4px;
-}
-
-.plan-card-body {
-  background: var(--plan-surface);
-  color: var(--plan-foreground);
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin-top: 34px;
-  padding: 16px 22px 22px;
-  position: relative;
-}
-
-.plan-card-body::before,
-.plan-card-body::after {
-  background: var(--plan-surface);
-  content: "";
-  height: 75px;
-  position: absolute;
-  top: -48px;
-  width: 74%;
-}
-
-.plan-card-body::before {
-  border-radius: 70% 45% 0 0 / 100% 70% 0 0;
-  left: -18%;
-  transform: rotate(4deg);
-}
-
-.plan-card-body::after {
-  border-radius: 48% 70% 0 0 / 72% 100% 0 0;
-  right: -18%;
-  transform: rotate(-4deg);
-}
-
-.plan-card-body > * {
-  position: relative;
-  z-index: 1;
-}
-
-.plan-card-body > p {
-  color: var(--plan-muted);
-  font-size: 0.68rem;
-  line-height: 1.6;
-  margin: 0;
-  min-height: 54px;
-}
-
-.plan-divider {
-  background: color-mix(in srgb, var(--plan-foreground) 18%, transparent);
-  height: 1px;
-  margin: 15px 0;
-}
-
-.plan-card ul {
-  display: grid;
-  gap: 10px;
+  gap: var(--space-3);
+  grid-template-columns: 1fr; /* empilhado; 3 colunas só a partir de 1040px (2 colunas deixaria um órfão) */
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.plan-card li {
-  align-items: center;
+/* Elemento que o GSAP anima (entrada). Sem transform no CSS para não brigar com ele. */
+.plan-card { display: flex; min-width: min(280px, 100%); }
+
+/* Wrapper visual: fundo, borda, sombra, lift e hover. Basic e Premium: branco sobre --mist. */
+.plan-card__inner {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
   display: flex;
-  font-size: 0.64rem;
-  gap: 8px;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-4);
+  position: relative;
 }
 
-.plan-card li .bi {
-  align-items: center;
-  background: color-mix(in srgb, var(--plan-foreground) 13%, transparent);
-  border-radius: 50%;
-  display: flex;
-  flex: 0 0 auto;
-  font-size: 0.68rem;
-  height: 20px;
-  justify-content: center;
-  width: 20px;
+/* Essential: borda azul de 2px, sombra de hover permanente, flutuando acima. */
+.plan-card.is-featured { margin-top: var(--space-2); }
+.plan-card.is-featured .plan-card__inner {
+  border: 2px solid var(--blue);
+  box-shadow: var(--shadow-card-hover);
 }
-
-.plan-eligibility {
-  border-top: 1px solid color-mix(in srgb, var(--plan-foreground) 18%, transparent);
-  display: grid;
-  gap: 5px;
-  margin-top: auto;
-  padding-top: 15px;
-}
-
-.plan-eligibility span {
-  color: var(--plan-muted);
-  font-size: 0.49rem;
-  text-transform: uppercase;
-}
-
-.plan-eligibility strong {
-  font-size: 0.61rem;
-  line-height: 1.4;
-}
-
-.button-plan {
-  background: color-mix(in srgb, var(--plan-foreground) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--plan-foreground) 20%, transparent);
+.plan-badge {
+  background: var(--blue-hover);
   border-radius: 999px;
-  color: var(--plan-foreground);
-  margin-top: 17px;
-  min-height: 42px;
-  width: 100%;
+  color: var(--white);
+  font-size: var(--text-small);
+  font-weight: 600;
+  left: var(--space-4);
+  line-height: 1;
+  padding: var(--space-1) var(--space-2);
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
 }
 
-.button-plan:hover {
-  background: color-mix(in srgb, var(--plan-foreground) 20%, transparent);
+.plan-head { align-items: center; display: flex; gap: var(--space-2); }
+.plan-name { color: var(--ink-muted); font-size: var(--text-small); font-weight: 400; letter-spacing: 0.08em; margin: 0; text-transform: uppercase; }
+
+.plan-price {
+  color: var(--ink);
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: var(--space-2) 0 0;
+  white-space: nowrap;
+}
+.plan-price span { color: var(--ink-muted); font-size: var(--text-small); font-weight: 400; letter-spacing: 0; margin-left: 4px; }
+.plan-washes { font-weight: 400; margin: var(--space-2) 0 0; }
+.plan-description { color: var(--ink-muted); margin: 0 0 var(--space-4); }
+/* Botão desce para o fim do card; o grid já iguala a altura dos três. */
+.plan-cta { margin-top: auto; padding: 14px 24px; white-space: nowrap; width: 100%; }
+
+.plans-note { color: var(--ink-muted); font-size: var(--text-small); margin: var(--space-4) 0 0; }
+
+@media (min-width: 768px) {
+  .plan-card__inner { padding: 40px; }
+  .plan-badge { left: 40px; }
+  .plans-note { margin-top: var(--space-6); }
 }
 
-.plan-card-basic .button-plan {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: #fff;
+@media (min-width: 1040px) {
+  .plan-list { align-items: stretch; grid-template-columns: repeat(3, 1fr); }
+  .plan-card.is-featured { margin-top: 0; }
+  .plan-card.is-featured .plan-card__inner { transform: translateY(-12px); }
+  /* Título e nota em uma linha cada: seção compacta (~750px a 1440). */
+  #planos .section-title { max-width: none; }
+  .plans-note { margin-top: var(--space-4); max-width: none; }
 }
 
-.plans-note {
-  color: var(--muted);
-  font-size: 0.61rem;
-  margin: 32px 0 0;
-  text-align: center;
+/* Hover só no wrapper interno, nunca no elemento que o GSAP anima. */
+@media (prefers-reduced-motion: no-preference) {
+  .plan-card__inner { transition: transform 200ms var(--ease-out), box-shadow 200ms ease; }
 }
-
-@media (max-width: 1080px) {
-  .plans-grid {
-    gap: 24px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .plan-card,
-  .plan-featured {
-    min-height: 565px;
-    transform: none;
-  }
-
-  .plan-featured:hover {
-    transform: translateY(-6px);
-  }
+@media (hover: hover) {
+  .plan-card:hover .plan-card__inner { box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
 }
-
-@media (max-width: 560px) {
-  .plans-grid {
-    gap: 22px;
-    grid-template-columns: 1fr;
-    padding-top: 0;
-  }
-
-  .plan-card,
-  .plan-featured {
-    min-height: 560px;
-  }
-
-  .plan-card-top {
-    min-height: 210px;
-  }
-
-  .plan-card-body {
-    padding-inline: 24px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .plan-card {
-    transition: none;
-  }
+@media (hover: hover) and (min-width: 1040px) {
+  .plan-card.is-featured:hover .plan-card__inner { transform: translateY(-16px); }
 }

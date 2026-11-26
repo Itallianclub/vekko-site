@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Sora } from "next/font/google";
-import { headers } from "next/headers";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { SITE_URL } from "./config/app-links";
 import "./globals.css";
 
 const sora = Sora({
@@ -9,55 +8,47 @@ const sora = Sora({
   subsets: ["latin"],
 });
 
+// Usada só nos rótulos das páginas de parceiro e legais: sem preload na home.
 const geistMono = Geist_Mono({
+  preload: false,
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const forwardedHost = requestHeaders.get("x-forwarded-host");
-  const requestHost = forwardedHost ?? requestHeaders.get("host") ?? "localhost:5173";
-  const safeHost = requestHost.replace(/[^a-zA-Z0-9.:[\]-]/g, "");
-  const forwardedProtocol = requestHeaders.get("x-forwarded-proto");
-  const protocol =
-    forwardedProtocol === "http" || safeHost.startsWith("localhost")
-      ? "http"
-      : "https";
-  const metadataBase = new URL(`${protocol}://${safeHost || "localhost:5173"}`);
-  const socialImage = new URL("/golf.png", metadataBase).toString();
+const metadataBase = new URL(SITE_URL);
+const socialImage = new URL("/golf.png", metadataBase).toString();
+const title = "VEKKO | Lavagem de carro por assinatura";
+const description =
+  "Assine um plano e lave seu carro nos parceiros VEKKO perto de você. Baixe o app na App Store ou no Google Play.";
 
-  return {
-    metadataBase,
-    title: {
-      default: "VEKKO — Lave seu carro sem pagar por cada lavagem",
-      template: "%s | VEKKO",
-    },
-    description:
-      "Assinatura e benefícios automotivos por veículo, conectados a uma rede de estabelecimentos parceiros.",
-    icons: {
-      icon: "/vekko-symbol.png",
-      shortcut: "/vekko-symbol.png",
-    },
-    openGraph: {
-      description:
-        "Planos por veículo, rede credenciada e utilização segura pelo aplicativo VEKKO.",
-      images: [{ alt: "VEKKO — Lave seu carro sem pagar por cada lavagem", url: socialImage }],
-      locale: "pt_BR",
-      siteName: "VEKKO",
-      title: "VEKKO — Lave seu carro sem pagar por cada lavagem",
-      type: "website",
-      url: metadataBase,
-    },
-    twitter: {
-      card: "summary_large_image",
-      description:
-        "Planos por veículo, rede credenciada e utilização segura pelo aplicativo VEKKO.",
-      images: [socialImage],
-      title: "VEKKO — Lave seu carro sem pagar por cada lavagem",
-    },
-  };
-}
+// Metadados estáticos: assim o <title>, a description e o Smart App Banner saem no <head>.
+export const metadata: Metadata = {
+  metadataBase,
+  title: {
+    default: title,
+    template: "%s | VEKKO",
+  },
+  description,
+  icons: {
+    icon: "/vekko-symbol.png",
+    shortcut: "/vekko-symbol.png",
+  },
+  openGraph: {
+    description,
+    images: [{ alt: title, url: socialImage }],
+    locale: "pt_BR",
+    siteName: "VEKKO",
+    title,
+    type: "website",
+    url: metadataBase,
+  },
+  twitter: {
+    card: "summary_large_image",
+    description,
+    images: [socialImage],
+    title,
+  },
+};
 
 export default function RootLayout({
   children,
